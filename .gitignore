@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+*.sqlite*
+*.db
+*.bak
+.knowledgeos-native/
+.obsidian/
+work/
+vault/
