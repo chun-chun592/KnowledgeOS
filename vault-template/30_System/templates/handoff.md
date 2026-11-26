@@ -44,12 +44,12 @@ This file is not validated by the Agent Wiki schema.
 
 ## Permissions and approvals
 
-- Human-note writes: <!-- none / request path / approved request path -->
+- Human-note proposal: <!-- none / proposal path; Human applies it manually -->
 - Required locks: <!-- index.md / log.md / none -->
 
 ## Do not touch
 
-- `00_Human/**` unless an approved request explicitly names a path
+- `00_Human/**` (any requested changes remain proposals for Human to apply)
 - `30_System/**`
 - <!-- specific pages -->
 

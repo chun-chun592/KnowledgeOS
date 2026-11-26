@@ -11,7 +11,7 @@ related: []
 <!--
 HUMAN NOTE TEMPLATE — copy to 00_Human/ and fill in.
 Frontmatter is optional in the human area; delete what you do not need.
-Agents may read this note but may not edit it without an approved write request.
+Agents read this note only if authorized. Any Agent-proposed edit is applied manually by the Human.
 -->
 
 # {{title}}

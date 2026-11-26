@@ -15,9 +15,11 @@ review_after: ""
 ---
 
 <!--
-SOURCE TEMPLATE → 10_Agent/raw/<documents|papers|websites>/<slug>.md
-The original file lives next to this page and is never modified.
-`knowledgeos ingest` creates this structure automatically.
+SOURCE TEMPLATE → an existing permitted Markdown location in 10_Agent/wiki/.
+Keep the original under 10_Agent/raw/ and link it from this page. Record provenance,
+summary, and evidence here. No dedicated sources directory is required.
+In an authorized test root, knowledgeos ingest --apply stores the original under
+10_Agent/raw/documents/ and writes the Source page to the allowed wiki path you supply.
 -->
 
 # {{title}}

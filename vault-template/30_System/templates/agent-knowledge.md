@@ -17,7 +17,7 @@ review_after: ""
 <!--
 GENERIC AGENT KNOWLEDGE TEMPLATE.
 Before use: (1) search the wiki for synonyms and aliases, (2) choose the type and matching directory,
-(3) fill created_by with your real agent id. Schema: [[30_System/schemas/agent-wiki]].
+(3) fill created_by with your real agent id. Schema: [[30_System/schemas/frontmatter.schema.json]].
 Delete sections that do not apply; never leave placeholder text in a saved page.
 -->
 
@@ -31,7 +31,7 @@ Delete sections that do not apply; never leave placeholder text in a saved page.
 
 ## Body
 
-事实 / Fact: <!-- directly supported claim; cite [[source]] p./§ -->
+事实 / Fact: <!-- directly supported claim; link the actual Source page and cite page or section -->
 
 推断 / Inference: <!-- conclusion derived from evidence; state the basis -->
 
@@ -53,7 +53,7 @@ Delete sections that do not apply; never leave placeholder text in a saved page.
 
 ## Sources
 
-- <!-- [[10_Agent/raw/...]] or https://... -->
+- <!-- link the actual Raw original or external source URL -->
 
 ## Contribution log
 

@@ -36,9 +36,9 @@ review_after: ""
 
 | Page | Role in this topic | Status |
 | --- | --- | --- |
-| [[concept]] | core mechanism | draft |
-| [[entity]] | key actor | draft |
-| [[comparison]] | decision support | draft |
+| <!-- link to an existing concept note --> | core mechanism | draft |
+| <!-- link to an existing entity note --> | key actor | draft |
+| <!-- link to an existing comparison note --> | decision support | draft |
 
 ## Current understanding
 
