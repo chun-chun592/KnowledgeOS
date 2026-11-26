@@ -1,22 +1,18 @@
 # 测试与验收 / Testing and Acceptance
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-历史 WB3E 验收为 365 PASS、2 BLOCKED。\
-Historical WB3E acceptance remains at 365 PASS and 2 BLOCKED.
+## 日常验证 / Daily Verification
 
-保留实际 Token、ACL、IPC、响应丢失、崩溃恢复、混合版本和 Native 验收约束。\
-Preserve actual Token, ACL, IPC, response loss, crash recovery, mixed-version, and Native acceptance constraints.
+验证实际安装版本、CLI 读取入口、MCP 工具列表及只读范围。知识工作应检查基线哈希、共享租约、来源和链接，以及索引与日志的对应记录。\
+Verify the installed version, CLI reading, MCP tool registration, and read-only scopes. Knowledge work checks the base hash, shared leases, citations and links, and matching index and log entries.
 
-WB3F 正式生产验收与独立 Windows/NTFS 签核仍受阻。\
-Formal WB3F production acceptance and independent Windows/NTFS signoff remain blocked.
+## 模式隔离与证据 / Mode and Evidence Separation
 
-本次整理未产生新的验收测试结果。\
-This documentation effort produced no new acceptance test results.
+写入、冲突、恢复和同步验证在独立测试根进行。已有验证适用于相应版本和环境；不承诺任意宿主、外部同步或真实库工具写入已验收。\
+Validate writes, conflicts, recovery, and sync in a separate test root. Existing checks apply to their tested versions and environments. They do not establish acceptance for every host, external sync, or real-vault tool writes.
 
-## 来源 / Sources
+## 严格验收 / Strict Acceptance
 
-[SRC-024 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-041 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-042 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-043 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-044 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-045 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-069 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-070 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-071 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-072 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
-
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+Token、ACL、IPC、响应丢失和崩溃恢复是严格模式独立验收项目。历史实验数据保留在本地和 Git 历史。\
+Token, ACL, IPC, lost response, and crash recovery checks belong to separate Strict-mode acceptance. Historical experimental results remain in local records and Git history.

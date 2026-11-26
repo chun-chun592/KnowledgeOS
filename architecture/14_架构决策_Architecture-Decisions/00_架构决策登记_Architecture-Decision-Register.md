@@ -1,57 +1,33 @@
 # 架构决策登记 / Architecture Decision Register
 
-本文件保留候选 ADR-01 至 ADR-06 的状态和决策边界。\
-This document preserves the status and decision boundaries of candidate ADR-01 through ADR-06.
+[返回正式架构 / Architecture entry point](../README.md)
 
-## ADR-01 应用策略与操作系统强制 / Application Policy and OS Enforcement
+## ADR-01 主体与权限 / Principals and Permissions
 
-早期 CLI 设计明确排除操作系统强制执行，后期 Secure Mode 要求 Token、ACL 和服务边界。\
-The earlier CLI design explicitly excludes OS enforcement, while later Secure Mode requires Token, ACL, and service boundaries.
+日常 Human 与 Agent 是逻辑主体。应用层治理约束工作流程；独立 Windows 身份仅适用于选用的严格模式。\
+Daily Human and Agent are logical principals. Application governance guides the workflow. Separate Windows identities apply only to optional Strict mode.
 
-保留范围与版本差异，新部署采用的规范契约仍待决定。\
-Preserve the scope and version distinctions, with normative contracts for a new deployment still to be decided.
+## ADR-02 内容与事务 / Content and Transactions
 
-## ADR-02 提交权威与可见投影 / Commit Authority and Visible Projection
+Markdown 为正文事实来源。Native 记录本地与观察事件，严格 SQLite COMMITTED 仅表示经验证的业务投影提交。\
+Markdown is authoritative for content. Native records local and observed events. Strict SQLite COMMITTED denotes a verified business projection commit.
 
-早期设计描述 Markdown 文件更新与受管索引，后期设计以 SQLite 的 COMMITTED 为业务权威，直接读取者可能提前看到完整投影。\
-The early design describes Markdown file updates and managed indexes, while the later design treats SQLite COMMITTED as business authority and direct readers may observe an early complete projection.
+## ADR-03 替换与恢复 / Replacement and Recovery
 
-读取类别与发布不变量仍需确认。\
-Read classes and publication invariants still require confirmation.
+保留哈希、备份与现有恢复证据。文件身份核验与替换无法构成原子比较交换；冲突或不确定时停止并对账。\
+Preserve hashes, backups, and existing recovery evidence. File identity verification and replacement do not form atomic compare-and-swap. Stop and reconcile on conflict or uncertainty.
 
-## ADR-03 两步替换与单步替换 / Two-step and Single-step Replacement
+## ADR-04 可选严格投影 / Optional Strict Projection
 
-保留旧恢复元数据、文件名短暂缺失的证据边界和非原子 FILE_ID CAS 限制。\
-Preserve legacy recovery metadata, the evidence limits on missing-name claims, and the non-atomic FILE_ID CAS limitation.
+独立的合成控制面、数据面、IPC 和角色范围继续受[严格投影补充](02_ADR04补充安全投影_ADR04-Secure-Projection-Addendum.md)约束。原生产服务绑定仍未批准，Publisher 禁用。\
+The separate synthetic control plane, data plane, IPC, and roles remain limited by the [Strict projection addendum](02_ADR04补充安全投影_ADR04-Secure-Projection-Addendum.md). Production service binding remains unapproved and Publisher is disabled.
 
-候选功能须经独立证明方可启用。\
-Independent proof is required before enabling the candidate.
+## ADR-05 同步范围 / Sync Scope
 
-## ADR-04 控制平面、数据平面与 Publisher / Control Plane, Data Plane, and Publisher
+暂无内置多设备同步；旧 Writer 要求由严格模式范围解释。外部 Markdown 同步继续使用冲突检测和人工核对。\
+There is no built-in multi-device sync. The older Writer requirement is limited to Strict mode. External Markdown synchronization continues to use conflict checks and review.
 
-可信控制平面与独立数据根是 PARTIAL 提案，生产权限尚未确定。\
-The trusted control plane and separate data root form a PARTIAL proposal, with production permissions still undecided.
+## ADR-06 来源与版本 / Provenance and Versions
 
-最终服务身份、Publisher 权限及绑定仍待决策。\
-Final service identities, Publisher authority, and binding still require a decision.
-
-## ADR-05 移动设备与同步 / Mobile Devices and Synchronization
-
-从原始设计来源恢复权威的离线、冲突与同步规范，或取得明确架构决策。\
-Recover authoritative offline, conflict, and synchronization specifications from the original design source, or obtain an explicit architecture decision.
-
-同步写入必须经过 Writer。\
-Synchronization writes must go through Writer.
-
-## ADR-06 来源溯源 / Source Provenance
-
-历史检查的 Candidate 根目录是没有 Git 元数据的导出。\
-The historically inspected Candidate root was an export without Git metadata.
-
-只读核验曾在独立的 WB3F Engineering 基线仓库中确认请求的冻结对象是提交且当时为 HEAD。\
-Read-only verification historically confirmed the requested frozen object was a commit and then HEAD in the separate WB3F Engineering baseline repository.
-
-原 ADR 将历史仓库保留和归档恢复核验列为待办；该时间点的判断通过原文及来源清单追溯。\
-The original ADR recorded history preservation and archive restoration verification as pending, and that point-in-time judgment remains traceable through the original text and provenance manifest.
-
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+历史候选和证据可经本地正式原件或 Git 历史追溯。发布版保留 Agent Kit 0.1.1 的来源与 MIT 声明，未把历史测试状态升级为当前验收。\
+Historical candidates and evidence remain traceable in local originals or Git history. The release retains Agent Kit 0.1.1 attribution and MIT terms without promoting historical tests to current acceptance.

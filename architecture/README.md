@@ -1,7 +1,7 @@
 # 正式系统架构 / Formal Architecture
 
-本目录保留正式架构的模块、编号、决策和可发布的设计原文。下述适用性说明来自当前 Markdown Native 工作规则、已发布实现和真实 Vault 的现行协作协议。\
-This directory preserves the formal architecture modules, numbering, decisions, and publishable design text. The applicability notes below reflect current Markdown Native rules, the released implementation, and the vault’s operating protocol.
+本目录按 00 至 14 展示当前正式架构。各模块正文以已发布实现和现行 Markdown Native 协作协议为依据，可选严格模式保留独立契约。\
+Modules 00 through 14 describe the current formal architecture, based on the released implementation and Markdown Native collaboration rules. Optional Strict mode retains its separate contracts.
 
 ## 当前适用性 / Current Applicability
 
@@ -50,8 +50,6 @@ See [Knowledge Architecture](07_知识架构_Knowledge-Architecture/00_模块概
 | 12 测试与验收 / Testing and Acceptance | [模块概述 / Overview](12_测试与验收_Testing-and-Acceptance/00_模块概述_Module-Overview.md) |
 | 13 部署 / Deployment | [模块概述 / Overview](13_部署_Deployment/00_模块概述_Module-Overview.md) |
 | 14 架构决策 / Architecture Decisions | [ADR-01 至 ADR-06](14_架构决策_Architecture-Decisions/00_架构决策登记_Architecture-Decision-Register.md) · [ADR-04 补充 / Addendum](14_架构决策_Architecture-Decisions/02_ADR04补充安全投影_ADR04-Secure-Projection-Addendum.md) |
-| 15、16 来源 / Provenance | [来源清单说明 / Manifest note](15_来源清单_Source-Manifest/README.md) · [文件级纳入及留存清单 / File-level inventory](16_架构来源_Architecture-Sources.md) |
-| 17 集成候选设计 / Integration Proposals | [Skills](17_集成研究_Integration-Research/03_Skills集成方案_Skills-Integration-Plan.md) · [MCP](17_集成研究_Integration-Research/04_MCP集成方案_MCP-Integration-Plan.md) · [Obsidian](17_集成研究_Integration-Research/05_Obsidian集成方案_Obsidian-Integration-Plan.md) |
 
 ## 安装、分发与来源 / Setup, Distribution, and Attribution
 
@@ -60,6 +58,9 @@ The project installs as a standard Python package, with optional Windows depende
 
 产品版本与 Core 来源版本分开维护。Agent Kit 0.1.1 提供继承的 Core、索引渲染和分段编辑代码；沿用既有 MIT 声明。\
 The product version is tracked separately from the Core source version. Agent Kit 0.1.1 provides the inherited Core, index rendering, and section editing code under its retained MIT notice. [LICENSE](../LICENSE)
+
+知识结构与工作流承接 SRC-011、012、014–021；可选严格投影承接 SRC-006–010、028–031、036–037、039–040 中仍适用的契约。原文、设计摘录、候选集成方案及逐文件来源清单可在此前的架构发布提交中追溯，本地原件保留。\
+The knowledge schema and workflows draw from SRC-011, 012, and 014–021. Optional Strict projection retains the applicable contracts from SRC-006–010, 028–031, 036–037, and 039–040. The prior architecture publication commit retains the source text, design excerpts, candidate integration plans, and file-level provenance. Local originals remain in place.
 
 本次仅整理文档。历史候选状态不变，未产生新的测试验收结论。\
 This is a documentation update. Historical candidate statuses remain in their original scope, and no new runtime acceptance results are claimed.

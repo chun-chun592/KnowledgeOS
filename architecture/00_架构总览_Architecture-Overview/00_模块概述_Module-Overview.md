@@ -1,19 +1,18 @@
 # 架构总览 / Architecture Overview
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-保留 Human 与 Agent 的知识分区，以及应用策略与操作系统强制执行之间的历史安全边界。\
-Preserve the Human and Agent knowledge split and the historical boundary between application policy and OS enforcement.
+## 目标与事实来源 / Scope and Source of Truth
 
-现存来源与索引属于候选冻结资料。\
-The retained sources and indexes are candidate freeze material.
+正文保存在现有 Markdown 目录中。Human 和 Agent 按逻辑所有权协作；索引、日志和辅助状态可从正文或可核验证据派生。\
+Note content lives in the existing Markdown tree. Humans and agents collaborate under logical ownership. Indexes, logs, and auxiliary state derive from content or verifiable evidence.
 
-历史验收仅适用于当时测试的版本和环境。\
-Historical acceptance applies only to the version and environment tested.
+## 两种运行方式 / Operating Modes
 
-## 来源 / Sources
+日常 Markdown Native 使用任意编辑器、宿主 Skills、只读 MCP／CLI 和获准的原生编辑。独立测试根可使用 Native 写工具；严格模式另有 Broker、Writer 和 SQLite。\
+Daily Markdown Native uses any editor, host Skills, read-only MCP or CLI, and approved native edits. A separate test root can use Native write tools. Strict mode has its own Broker, Writer, and SQLite ledger.
 
-[SRC-001](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-001-ARCHITECTURE.md) [SRC-002](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-002-architecture.md)
+## 继续阅读 / Continue Reading
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+[系统架构](../01_系统架构_System-Architecture/00_模块概述_Module-Overview.md)说明组件和数据流，[知识架构](../07_知识架构_Knowledge-Architecture/00_模块概述_Module-Overview.md)说明目录及字段。\
+See [system architecture](../01_系统架构_System-Architecture/00_模块概述_Module-Overview.md) for components and data flow, and [knowledge architecture](../07_知识架构_Knowledge-Architecture/00_模块概述_Module-Overview.md) for directories and fields.

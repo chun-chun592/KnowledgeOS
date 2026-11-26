@@ -1,23 +1,18 @@
-# 多设备 / Multi Device
+# 多设备 / Multi-Device
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-迁移简报将 Windows、Mobile 和 Tablet 列为架构范围。\
-The migration brief defines Windows, Mobile, and Tablet as architectural scope.
+## 多设备访问 / Multi-Device Access
 
-已审查来源缺少权威完整的历史同步、冲突解决和离线恢复契约。\
-The reviewed sources contain no authoritative and complete historical synchronization, conflict-resolution, or offline-recovery contract.
+同一 Markdown 目录可由不同设备或编辑工具访问，知识事实仍是文件正文。项目当前没有内置同步、离线合并或跨设备锁协调能力。\
+The same Markdown tree can be opened from different devices and editors. Note content remains authoritative. The project currently provides no built-in sync, offline merge, or distributed locking.
 
-现有证据不足以推断新协议。\
-The available evidence does not establish a new protocol.
+## 外部同步与冲突 / External Sync and Conflicts
 
-未来同步写入须保留 Writer 边界。\
-Any future synchronization write must retain the Writer boundary.
+若使用外部同步，先由 Human 确认范围和冲突政策，避免并发编辑同一文件。检测到哈希变化或同步冲突时重读并人工核对。观察到的文件变化不会被标成 Writer 事务。\
+For external sync, the Human sets scope and conflict policy and avoids concurrent edits of the same file. Re-read and review on hash changes or sync conflicts. Observed changes are not Writer transactions.
 
-## 来源 / Sources
+## 严格模式范围 / Strict Mode Scope
 
-审查范围内未找到权威历史来源。\
-No authoritative historical source was found in the reviewed material.
-
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+历史 Writer 同步要求只适用于明确选择的严格投影契约，不约束日常外部 Markdown 同步。\
+The historical Writer synchronization requirement only applies to the explicitly selected Strict projection contract.

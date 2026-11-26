@@ -1,24 +1,18 @@
 ---
 name: knowledge-maintenance
-description: Maintain the Agent wiki by checking references, reviewing committed transactions, or deleting and restoring specific Agent notes through the configured KnowledgeOS tools.
+description: Maintain Agent links, indexes, logs and approved recovery within the configured KnowledgeOS mode.
 ---
 
 # 知识维护 / Knowledge Maintenance
 
-在原生模式下，使用 native_note_change 或 markdown_native.py 执行 Agent 范围恢复；用 sync_native_wiki 或 CLI sync 发现外部改动、重建索引及日志。\
-In Native mode, use native_note_change or markdown_native.py for Agent-scope restoration. Use sync_native_wiki or CLI sync to discover external edits and rebuild the index and log.
+根据宿主选择 MCP、CLI 或原生工具做只读链接、引用和元数据检查。区分范围外不可见和已确认失效，Human 修复只交付提案。\
+Select MCP, CLI, or native tools for read-only checks of links, references, and metadata. Distinguish out-of-scope targets from confirmed breakage. Human repairs remain proposals.
 
-先用 `lint_knowledge` 查找问题，再用 `knowledge_links` 核对目标笔记、反向链接和歧义引用。\
-Use `lint_knowledge` to find issues, then use `knowledge_links` to check targets, backlinks, and ambiguous references.
+真实库按现有协议使用租约、哈希及备份，定点修改 Agent 索引或日志。遵循现有归档规则，真实库不使用测试根删除、恢复或全量同步工具。\
+Follow real-vault leases, hashes, backups and targeted Agent index or log edits. Follow the vault archive policy. Real-vault maintenance does not use test-root delete, restore, or full sync tools.
 
-修改链接时先读取涉及的笔记；只提交已明确请求的 Agent 区变更，Human 区变更交付完整 Markdown 和 diff。\
-Read the affected notes before editing links, submit only requested Agent changes, and deliver complete Markdown and a diff for Human changes.
+独立 Native 测试根可以使用 native_note_change 或 knowledgeos restore 按备份哈希恢复，用 sync_native_wiki 或 knowledgeos sync 发现外部改动并重建托管区块。\
+In a separate Native test root, use native_note_change or knowledgeos restore with a backup hash. Use sync_native_wiki or knowledgeos sync to observe external changes and rebuild managed blocks.
 
-删除须指定单篇 Agent 笔记，并使用同一次读取返回的文件身份和 SHA-256；恢复须引用已提交的删除事务并检查原路径为空。\
-Deletion requires one specific Agent note and the identity and SHA-256 from the same read. Restoration requires the committed deletion transaction and a vacant original path.
-
-使用已连接的 MCP，或在配置了 Broker CLI 的脚本环境中选择 CLI；保留原幂等键并核对提交状态。\
-Use the connected MCP or choose the Broker CLI in a configured scripting environment. Preserve the original idempotency key and verify the transaction status.
-
-用 `knowledge_audit` 或 Broker CLI 的 `audit` 查看已提交的 Agent 事务；派生文件显示 `SYNC_PENDING`、需要重建或有失效条目时，调用 `sync_agent_wiki` 或 CLI 的 `sync_wiki`。\
-Use `knowledge_audit` or the Broker CLI's `audit` to review committed Agent transactions. Use `sync_agent_wiki` or CLI `sync_wiki` after `SYNC_PENDING`, to rebuild, or to remove stale entries.
+可选严格模式独立使用 knowledge_audit、文件身份及事务键，派生文件待修复时用 sync_agent_wiki 或 Broker CLI 的 sync_wiki。\
+Optional Strict mode uses knowledge_audit, file identity, and transaction keys. For pending projections, use sync_agent_wiki or the Broker CLI sync_wiki operation.

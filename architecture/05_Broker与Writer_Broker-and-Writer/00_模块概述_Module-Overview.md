@@ -1,19 +1,21 @@
-# Broker与Writer / Broker and Writer
+# Broker 与 Writer / Broker and Writer
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-保留经认证的命名管道端点、有界版本化帧、关联响应、限定身份验证和受控 Writer 操作。\
-Preserve authenticated named-pipe endpoints, bounded versioned frames, correlated replies, qualified identity verification, and controlled Writer operations.
+## 可选职责 / Optional Roles
 
-安全连接失败时禁止回退到本地写入。\
-A failed secure connection cannot fall back to local writes.
+Broker 验证本地命名管道对端、授权操作和目标，受保护的 Writer 管道只允许 Broker；Writer 依据绑定的请求及证据修改合成 Agent 投影。\
+The Broker authenticates the local named-pipe peer, operation, and target. Only the Broker is admitted to the protected Writer pipe. The Writer changes synthetic Agent projections using bound requests and evidence.
 
-Broker、Writer 和 Publisher 的角色决策彼此独立，Publisher 的生产激活仍待决定。\
-Broker, Writer, and Publisher role decisions remain distinct, and production Publisher activation is unresolved.
+## 提交契约 / Commit Contract
 
-## 来源 / Sources
+请求和幂等键绑定已验证主体、操作、相对路径、文件身份和内容摘要；重复键用于查询或复用同一决定，摘要不符为冲突。未知结果先查询或核验，不换键盲重试。\
+Requests and idempotency keys bind the verified principal, operation, relative path, file identity, and content digest. Replay queries or reuses the same decision, and differing digests conflict. Check unknown outcomes without retrying under a new key.
 
-[SRC-006](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-006-wb3d2-writer.md) [SRC-007](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-007-PIPE-TRANSPORT.md) [SRC-008](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-008-MANAGED-WRITE-GATES.md) [SRC-049 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-050 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-051 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
+合成严格传输采用本地消息模式管道，拒绝远程连接，使用有界 JSON 消息并拒绝重复键。客户端核验端点身份；认证或绑定失败时停止，无本地直写回退。\
+Synthetic Strict transport uses local message-mode pipes, rejects remote connections, bounds JSON messages, and rejects duplicate keys. Clients verify endpoint identity. Authentication or binding failure stops the request without falling back to local writes.
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+## 日常边界 / Daily Boundary
+
+Markdown Native 日常工作无需 Broker 或 Writer。独立测试根的 Native 变更走本地作用域与哈希规则；合成 Strict 前置条件及恢复边界见 [ADR-04 补充](../14_架构决策_Architecture-Decisions/02_ADR04补充安全投影_ADR04-Secure-Projection-Addendum.md)。\
+Daily Markdown Native use requires neither Broker nor Writer. Native test changes use local scope and hash rules. See the [ADR-04 addendum](../14_架构决策_Architecture-Decisions/02_ADR04补充安全投影_ADR04-Secure-Projection-Addendum.md) for synthetic Strict prerequisites and recovery boundaries.

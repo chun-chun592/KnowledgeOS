@@ -1,22 +1,18 @@
 # 身份与安全 / Identity and Security
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-Human、Agent、Writer 和 Unauthorized 使用不同身份，并核验 SID 和 Token。\
-Human, Agent, Writer, and Unauthorized use distinct principals with verified SID and Token.
+## 主体和范围 / Principals and Scope
 
-通过显式 ACL、所有者、继承、父目录删除子项权限及身份检查执行默认拒绝和最小权限。\
-Enforce default deny and least privilege with explicit ACL, owner, inheritance, parent delete-child, and identity checks.
+Human 与 Agent 是逻辑知识主体。Human 可用任意 Markdown 工具直接编辑。Agent 仅在获准范围内读写；默认查询 Agent Wiki，Human 读取范围须明确配置。\
+Human and Agent are logical knowledge owners. Humans can edit directly with any Markdown tool. Agents operate only within approved scopes. The Agent wiki is the default read scope, and Human scopes require explicit configuration.
 
-已证明的非特权隔离保证不覆盖同 SID 进程和受信任的特权主体。\
-The demonstrated nonprivileged isolation guarantee excludes same-SID processes and trusted privileged principals.
+## 提案与治理 / Proposals and Governance
 
-静态审查不能证明运行时强制执行。\
-Static review cannot establish runtime enforcement.
+Human 修改交付目标、理由、完整 Markdown、diff 和基础 SHA-256。由 Human 比对基线后自行应用。Skills、哈希和协作租约属于应用层治理，同一账户的文件工具仍受其实际文件权限约束。\
+Human changes are delivered with the target, rationale, complete Markdown, diff, and base SHA-256. Humans check the baseline before applying them. Skills, hashes, and leases are application-level governance. File tools retain the permissions of their actual account.
 
-## 来源 / Sources
+## 严格模式例外 / Strict Mode Boundary
 
-[SRC-003](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-003-SECURITY.md) [SRC-004](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-004-permissions.md) [SRC-005](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-005-permissions.md) [SRC-032 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-033 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-034 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-035 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-046 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-047 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-048 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
-
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+独立 Windows 身份、Token 验证、管道 ACL 和拒绝门禁属于可选合成严格模式。Human 自动写入保持关闭，Publisher 禁用。\
+Separate Windows principals, token checks, pipe ACLs, and deny gates belong to optional synthetic Strict mode. Automatic Human writes remain closed and Publisher is disabled.

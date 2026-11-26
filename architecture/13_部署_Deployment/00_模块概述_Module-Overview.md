@@ -1,16 +1,18 @@
 # 部署 / Deployment
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-将历史部署和配置指南与受保护控制平面提案分别保留。\
-Preserve historical deployment and configuration guidance separately from the protected-control-plane proposal.
+## 日常安装 / Daily Installation
 
-在适用前置门禁通过前，禁止配置角色、布置服务或连接真实 Vault。\
-Do not provision roles, stage a service, or connect the real Vault before the applicable preceding gates pass.
+使用 Python 3.11+，从项目根目录运行 python -m pip install .，再使用 knowledgeos --version 与 knowledgeos --vault <vault-root> doctor。使用现有目录，无需启动 Obsidian、后台服务或管理员工具。\
+Use Python 3.11+, run python -m pip install . from the project root, then check knowledgeos --version and knowledgeos --vault <vault-root> doctor. Use the existing tree without starting Obsidian, background services, or administrator tools.
 
-## 来源 / Sources
+## 宿主配置 / Host Configuration
 
-[SRC-025 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-026 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-027 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-067 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-068 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
+CLI 和原生文件工具可独立使用。需要 MCP 时用 knowledgeos-mcp --vault <vault-root>，只传明确批准的 Human 范围，不打开真实库直写。配置及 Skill 发现参见[宿主接入](../../adapters/README.md)和[示例](../../config/knowledgeos.example.toml)。\
+CLI and native file tools work independently. For MCP, use knowledgeos-mcp --vault <vault-root>, adding only approved Human scopes and leaving real-vault tool writes closed. See [host adapters](../../adapters/README.md) and [sample configuration](../../config/knowledgeos.example.toml).
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+## 测试根与严格模块 / Test Roots and Strict Module
+
+测试根 Native 写入需要与受保护库分开并保留根保护。严格模式另需可选依赖、既有合成配置、独立身份和受保护 IPC。旧 Windows 部署研究不用于日常安装。\
+Native test writes require a separate root and preserve protected-root checks. Strict mode separately requires optional dependencies, existing synthetic configuration, distinct principals, and protected IPC. Historical Windows deployment research does not apply to daily installation.

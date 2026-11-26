@@ -8,6 +8,9 @@ description: Route a KnowledgeOS task across retrieval, source intake, synthesis
 先读目标 Vault 的 AGENTS.md，检查宿主可用的 Skills、MCP 和 CLI。\
 Read the target vault's AGENTS.md and inspect the host's available Skills, MCP, and CLI.
 
+已批准的原生文件读取可用于无 MCP 的宿主。分别选择真实库原生编辑、独立 Native 测试工具和可选严格模式流程。\
+Approved native reading works in hosts without MCP. Choose the relevant workflow for real-vault native edits, independent Native test tools, or optional Strict mode.
+
 按需组合 knowledge-query、knowledge-ingest、knowledge-research、knowledge-synthesis、knowledge-update、knowledge-lint 和 knowledge-maintenance。\
 Combine knowledge-query, knowledge-ingest, knowledge-research, knowledge-synthesis, knowledge-update, knowledge-lint, and knowledge-maintenance as needed.
 

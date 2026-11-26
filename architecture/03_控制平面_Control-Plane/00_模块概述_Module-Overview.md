@@ -1,19 +1,18 @@
 # 控制平面 / Control Plane
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-保留独立可信控制平面及其与数据平面卷和根文件标识绑定的身份、配置。\
-Preserve the independent trusted control plane and its identity and configuration binding to the data-plane volume and root file identity.
+## 日常控制 / Daily Control
 
-受保护控制平面与独立数据卷的历史提案仍为 PARTIAL。\
-The historical proposal for a protected control plane and separate data volume remains PARTIAL.
+任务路由由宿主及 Skills 完成；实际控制入口是库根 AGENTS.md、批准范围及本机 CLI／MCP 配置。MCP 是可选工具接口，宿主也可直接读文件或走现有 CLI。\
+The host and Skills route tasks. The vault's AGENTS.md, approved scopes, and local CLI or MCP configuration define the operating boundary. MCP is optional; hosts may also read files or use the existing CLI.
 
-发布和启动继续受门禁控制。\
-Publication and startup remain gated.
+## 动作选择 / Action Selection
 
-## 来源 / Sources
+先区分读取、Agent 草稿或实际修改、Human 提案，再按权限与工具可用性执行。真实库直接编辑遵循协作协议；工具缺失或验收失败时保留草稿并报告。\
+Distinguish reads, proposed or actual Agent changes, and Human proposals before choosing an available authorized tool. Real-vault edits follow the collaboration protocol. Keep drafts and report unavailable tools or failed verification.
 
-[SRC-036](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-036-CONTROL-PLANE-DATA-PLANE-DECISION.md)
+## 可选控制面 / Optional Strict Control Plane
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+严格模式的可信配置固定根、角色、管道和许可；Broker 认证请求并通过独立受保护管道交给 Writer。普通 Agent 无权把请求声明当成服务身份。\
+Trusted Strict configuration binds the root, roles, pipes, and permissions. The Broker authenticates requests and hands them to the Writer over a separate protected pipe. Agent-supplied identity claims carry no service authority.

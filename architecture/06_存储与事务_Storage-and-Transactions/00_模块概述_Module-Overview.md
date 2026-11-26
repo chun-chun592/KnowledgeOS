@@ -1,19 +1,24 @@
 # 存储与事务 / Storage and Transactions
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-Markdown 承载知识，SQLite 在后期设计中是业务提交权威，不可变对象以内容寻址，日志与索引可派生并修复。\
-Markdown carries knowledge, SQLite is the business commit authority in the later design, immutable objects are content-addressed, and logs and indexes are derived and repairable.
+## 知识、证据和索引 / Knowledge, Evidence, and Index
 
-保留同卷原子替换、锁、幂等性、明确的结果未知状态、崩溃恢复和完整性检查。\
-Preserve same-volume atomic replacement, locks, idempotency, explicit unknown outcomes, crash recovery, and integrity checks.
+Markdown 是正文事实来源。索引按类型分组并展示摘要、状态与统计；真实库定点更新相关行，保留手写内容。日志保存实际操作、目标和哈希变化。\
+Markdown is authoritative for content. The index groups notes by type with summaries, status, and counts. Real-vault updates preserve hand-written content and target relevant rows. Logs record the operation, target, and hash changes.
 
-文件身份检查与重命名是不同步骤，候选设计不提供原子 FILE_ID CAS。\
-File identity checks and rename are separate steps, and the candidate provides no atomic FILE_ID CAS.
+## 原生备份与同步 / Native Backup and Sync
 
-## 来源 / Sources
+真实库备份与租约按既有协议执行。独立测试根 Native 流程保留按哈希寻址的备份和观察状态；同步重建托管区块，记录 native_local 或 observed_filesystem，不生成严格事务。外部编辑仅在扫描比对时被观察。\
+Real-vault backups and leases follow the existing protocol. Native test workflows keep content-addressed backups and observation state. Sync rebuilds managed blocks and records native_local or observed_filesystem without creating Strict transactions. External edits are seen only on a comparison scan.
 
-[SRC-009](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-009-TRANSACTION-LEDGER-CONTRACT.md) [SRC-010](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-010-LEDGER-SCHEMA.md) [SRC-039](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-039-WB3F-TECHNICAL-DESIGN.md) [SRC-052 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-053 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only) [SRC-054 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
+## 严格账本与恢复 / Strict Ledger and Recovery
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+严格模式以 SQLite 记录事务和审计，Markdown 仍为正文。通过收据、备份摘要与文件身份对账；确认已投影后补账本，未知证据进入人工检查。\
+Strict mode uses SQLite for transactions and audit. Markdown remains authoritative for content. Reconcile receipts, backup digests, and file identity. Complete ledger state for verified projections and send unknown evidence for review.
+
+严格账本以已认证主体与幂等键作为唯一请求关联，并记录请求摘要。投影收据、内容备份和成功审计分开保存；派生文件落后时单独同步，保留已确认提交。\
+The Strict ledger uniquely associates the authenticated principal and idempotency key and retains the request digest. Projection receipts, content backups, and successful audit records are separate. Rebuild stale projections independently and retain confirmed commits.
+
+严格投影替换与 SQLite 提交不是同一次操作。直接读取者可能在账本确认之前看到新的完整文件，故严格业务结果应从账本核实。\
+Strict projection replacement and SQLite commit are separate operations. Direct readers may see a complete new file before the ledger confirms it, so verify Strict business outcomes against the ledger.

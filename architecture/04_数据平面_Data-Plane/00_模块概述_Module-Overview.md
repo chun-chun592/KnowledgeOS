@@ -1,19 +1,18 @@
 # 数据平面 / Data Plane
 
-状态为 CANDIDATE / PARTIAL。\
-The status is CANDIDATE / PARTIAL.
+[返回正式架构 / Architecture entry point](../README.md)
 
-业务账本、Broker 审计、私有暂存与封存、受限提前读取投影各自独立。\
-Keep the business ledger, Broker audit, private staging and seal, and limited early read projection separate.
+## 正文与派生数据 / Content and Projections
 
-Broker 私有权限不会下放给 Writer 或 Agent。\
-Broker private rights do not transfer to Writer or Agent.
+Agent Wiki 的 Markdown 保存正文。读取会验证范围、路径和文件访问条件，链接与索引反映当前已读范围；日志、备份和测试根缓存是辅助数据。\
+Agent wiki Markdown holds note content. Reads check scope, paths, and file access conditions. Links and indexes reflect the visible scope. Logs, backups, and test-root caches are auxiliary.
 
-保留失败时关闭的激活行为，以及父目录稳定性、继承、重解析点与链接规则。\
-Retain fail-closed activation and rules for stable parents, inheritance, reparse points, and links.
+## 写入边界 / Write Boundary
 
-## 来源 / Sources
+真实库按库内协议原生编辑，先保留基础哈希与备份，再更新目标和派生记录。独立测试根的 Native 工具仅对合格 Agent Markdown 执行替换、备份与同步，拒绝受保护根和标记的严格测试根。\
+Real-vault edits follow local protocol: capture a base hash and backup, then update the note and its derived records. Native tools replace, back up, and sync eligible Agent Markdown in a separate test root. They reject protected roots and marked Strict roots.
 
-[SRC-037](01_%E5%8E%86%E5%8F%B2%E6%9D%A5%E6%BA%90_Historical-Sources/SRC-037-SECURE-CREATION-CONTRACT.md) [SRC-038 · 历史引用 / historical reference](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md#local-only)
+## 严格投影 / Strict Projection
 
-[架构来源与索引 / Architecture sources and index](../16_%E6%9E%B6%E6%9E%84%E6%9D%A5%E6%BA%90_Architecture-Sources.md)
+严格模式要求绑定根和父目录、验证文件身份、拒绝链接、私有暂存、提交前后核对及失败关闭。严格账本只在验证投影后确认 COMMITTED。\
+Strict mode requires root and parent binding, file identity checks, link rejection, private staging, pre- and post-write verification, and fail-closed behavior. Its ledger marks COMMITTED only after verifying the projection.
