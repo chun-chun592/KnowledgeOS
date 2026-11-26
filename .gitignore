@@ -9,3 +9,6 @@ __pycache__/
 .obsidian/
 work/
 vault/
+build/
+dist/
+*.egg-info/

@@ -83,6 +83,9 @@ class WriteStatus(TypedDict):
     available: bool
     code: str
     publisher_enabled: bool
+    native_test_write: bool
+    strict_writer: bool
+    native_file_policy: str
 
 
 class ChangeCheck(TypedDict):
@@ -433,10 +436,12 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
 
     @server.tool(annotations=RO)
     def write_capability() -> WriteStatus:
-        """Report whether an authorized Broker and Writer are available for committing an in-memory draft."""
-        status = forward_change({"operation": "ping"})
-        available = status.get("code") == "AVAILABLE"
-        return {"available": available, "code": "AVAILABLE" if available else "SECURE_WRITER_UNAVAILABLE",
+        """Report enabled write tools separately from authorized native editor use."""
+        strict = write_endpoint is not None and forward_change({"operation": "ping"}).get("code") == "AVAILABLE"
+        code = ("NATIVE_TEST_WRITE_AVAILABLE" if native_write else "STRICT_WRITER_AVAILABLE" if strict
+                else "STRICT_WRITER_UNAVAILABLE" if write_endpoint is not None else "READ_ONLY")
+        return {"available": native_write or strict, "code": code, "native_test_write": native_write,
+                "strict_writer": strict, "native_file_policy": "requires_operator_approval_and_vault_rules",
                 "publisher_enabled": False}
 
     def forward_change(request: dict) -> dict:

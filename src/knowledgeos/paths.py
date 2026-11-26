@@ -542,33 +542,6 @@ class Vault:
     def _prune_windows_backups(self, *, current_run: str | None = None) -> None:
         from .errors import PermissionDenied as LegacyWriteDenied
         raise LegacyWriteDenied("LEGACY_WRITE_DISABLED: use the Broker-backed client")
-        from ._windows_fs import ATTR_DIRECTORY, ATTR_REPARSE_POINT, bound_parent, directory_entries, prune_backup_run
-        from .transactions import is_done
-
-        def can_prune(operation_id: str | None) -> bool:
-            return operation_id is None or is_done(self, operation_id)
-
-        logger = logging.getLogger(__name__)
-        try:
-            with bound_parent(self._windows_internal_target(BACKUP_DIR / ".receipt.json")) as (parent, volume):
-                runs = directory_entries(parent)
-                eligible = sorted((name for name, (_, attributes) in runs.items()
-                                   if re.fullmatch(r"[0-9]{8}T[0-9]{6}-[0-9a-f]{6}", name)
-                                   and attributes & (ATTR_DIRECTORY | ATTR_REPARSE_POINT) == ATTR_DIRECTORY),
-                                  reverse=True)
-                if current_run in eligible:
-                    eligible.remove(current_run)
-                    eligible.insert(0, current_run)
-                keep = max(MAX_BACKUP_RUNS, int(current_run is not None))
-                for name in eligible[keep:]:
-                    try:
-                        prune_backup_run(parent, volume, name, runs[name][0], can_prune)
-                    except (OSError, PathSecurityError, ValueError) as exc:
-                        logger.warning("Retained backup run %s: %s", name, exc)
-        except FileNotFoundError:
-            return
-        except (OSError, PathSecurityError, ValueError) as exc:
-            logger.warning("Backup retention could not enumerate the backup directory: %s", exc)
 
     def lock(self, name: str) -> "FileLock":
         return FileLock(self, name)

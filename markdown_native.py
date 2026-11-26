@@ -3,18 +3,18 @@
 from release_paths import protected_vault
 
 import argparse
-from contextlib import contextmanager
-from datetime import datetime, timezone
+from contextlib import ExitStack, contextmanager
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
 import os
 from pathlib import Path, PurePosixPath
 import sys
 from tempfile import NamedTemporaryFile
-from urllib.parse import quote
 from uuid import uuid4
 
 from server import MAX_BYTES, SCOPE, Wiki, checked_handle, is_link, safe_name
+from knowledgeos.index_format import render_block
 from mcp.server.fastmcp.exceptions import ToolError
 
 META = {"index.md", "log.md", "readme.md"}
@@ -70,12 +70,12 @@ class NativeWiki:
         self.base = self.root / SCOPE
         self.state = self.base / ".knowledgeos-native"
         real = protected_vault().resolve()
-        if (os.name == "nt" and self.root.resolve().is_relative_to(real)
+        if (self.root.resolve().is_relative_to(real)
                 or os.path.lexists(self.root / ".knowledgeos-r6-synthetic")):
             raise ValueError("Native writes require a separate approved local root")
 
     @contextmanager
-    def locked(self):
+    def locked(self, *notes):
         if self.base.resolve(strict=True) != self.base:
             raise ValueError("unsafe wiki directory")
         self.state.mkdir(exist_ok=True)
@@ -84,9 +84,28 @@ class NativeWiki:
         lock = self.state / "lock"
         lock.mkdir()
         try:
-            yield
+            with ExitStack() as stack:
+                folder = self.root / "20_Exchange/agent-to-agent/locks"
+                if os.path.lexists(folder):
+                    if folder.resolve(strict=True) != folder or is_link(folder) or not folder.is_dir():
+                        raise ValueError("unsafe shared lease directory")
+                    now = datetime.now(timezone.utc)
+                    for relative in sorted(set(notes) | {"10_Agent/wiki/index.md", "10_Agent/wiki/log.md"}):
+                        path = folder / (relative.replace("/", "-").replace(".", "-") + ".lock.md")
+                        payload = ("---\nlock: true\npath: " + json.dumps(relative) + "\nowner: knowledgeos-native\n"
+                                   f"acquired: {now.isoformat()}\nexpires: {(now + timedelta(minutes=15)).isoformat()}\n"
+                                   "intent: Native Markdown update or projection sync\n---\n").encode()
+                        with path.open("xb") as stream:
+                            stream.write(payload)
+                        stack.callback(self.release_lease, path, payload)
+                yield
         finally:
             lock.rmdir()
+
+    @staticmethod
+    def release_lease(path, payload):
+        if read_file(path) == payload:
+            path.unlink()
 
     def target(self, path):
         rel = PurePosixPath(path)
@@ -121,7 +140,7 @@ class NativeWiki:
         if skipped:
             raise ValueError("incomplete wiki scan; sync deferred")
         observed = {}
-        rows = []
+        documents = []
         for note in notes:
             relative = PurePosixPath(note.path)
             if relative.name.casefold() in META:
@@ -130,8 +149,7 @@ class NativeWiki:
             if data is None or digest(data) != note.sha256:
                 raise ValueError("note changed during sync")
             observed[note.path] = self.backup(data)
-            title = " ".join(note.document.title.split()).replace("\\", "\\\\").replace("[", r"\[").replace("]", r"\]")
-            rows.append(f"- [{title}]({quote(relative.relative_to(SCOPE).as_posix(), safe='/')})")
+            documents.append(note.document)
         baseline = record["observed"]
         if local_event is not None:
             path = local_event["path"]
@@ -152,7 +170,7 @@ class NativeWiki:
         if payload != original:
             publish(state_file, payload, original)
         log = ["    " + json.dumps(event, ensure_ascii=False) for event in record["events"]]
-        self.project("index.md", "index", sorted(rows))
+        self.project("index.md", "index", render_block(documents).splitlines()[1:-1])
         self.project("log.md", "native-observations", log)
         return {"code": "NATIVE_SYNCED", "notes": len(observed), "events": len(record["events"])}
 
@@ -161,14 +179,17 @@ class NativeWiki:
         previous = read_file(path)
         text = previous.decode("utf-8") if previous is not None else f"# Agent Wiki {name[:-3].title()}\n"
         start, end = (f"<!-- knowledgeos:{block}:{edge} -->" for edge in ("start", "end"))
-        body = "\n".join([start, *rows, end])
+        eol = "\r\n" if "\r\n" in text else "\n"
+        body = eol.join([start, *rows, end])
         if start not in text and end not in text:
-            updated = text + "\n\n" + body + "\n"
+            updated = text + eol * 2 + body + eol
         elif text.count(start) == text.count(end) == 1 and text.index(start) < text.index(end):
             updated = text[:text.index(start)] + body + text[text.index(end) + len(end):]
         else:
             raise ValueError(f"malformed managed block: {name}")
         if updated != text:
+            if previous is not None:
+                self.backup(previous)
             publish(path, updated.encode(), previous)
 
     def sync(self):
@@ -179,7 +200,7 @@ class NativeWiki:
         if operation not in {"create", "update", "delete", "restore"}:
             raise ValueError("unknown local operation")
         target = self.target(path)
-        with self.locked():
+        with self.locked(path):
             self.sync_locked()
             previous = read_file(target)
             before = digest(previous) if previous is not None else None

@@ -15,14 +15,14 @@ Markdown 是知识的唯一事实来源。Human 和 Agent 是逻辑知识主体�
 
 ## 接入现有知识文件夹
 
-1. 安装 Python 3.11 或更新版本，在项目目录执行 `python -m pip install -r requirements.txt`。
+1. 安装 Python 3.11 或更新版本，在项目目录执行 `python -m pip install .`，再用 `knowledgeos --version` 确认安装。
 2. 使用已经包含 `10_Agent/wiki` 的目录，保持原结构，并先读取库内 `AGENTS.md` 及其引用规则。
 3. 配置下列任一工具入口，然后直接用自然语言提问。
 
 MCP 默认只读：
 
 ```text
-python -B server.py --vault <vault-root>
+knowledgeos-mcp --vault <vault-root>
 ```
 
 已批准读取 Human 子目录时，可追加 `--human-read 00_Human/Resources` 或实际批准的精确相对路径。默认不加 Human 读取范围。只有 CLI 的宿主可将下面的 JSON 传入 `python write_client.py --vault <vault-root> inspect` 的标准输入。
@@ -33,7 +33,7 @@ python -B server.py --vault <vault-root>
 
 ## 接入 Agent 宿主
 
-使用已安装依赖的 Python 注册本地 **stdio** MCP 服务，将 `-B <project>/server.py --vault <vault-root>` 分别作为参数传入。本机路径仅写入本地配置。用宿主支持的 Skills 发现机制开放所需的 `skills/<name>/SKILL.md`。Agent 可按任务选择或组合 Skills，并按环境选择 MCP、CLI 或原生文件工具。
+将安装环境中的 `knowledgeos-mcp` 注册为本地 **stdio** MCP 服务，分别传入 `--vault` 和根路径。本机路径仅写入本地配置。通过宿主支持的 Skills 发现机制开放 `skills/<name>/SKILL.md`，可使用七项任务 Skill 和可选的总入口。[宿主适配](adapters/README.md)
 
 | 宿主 | 配置入口 |
 | --- | --- |
@@ -49,10 +49,16 @@ python -B server.py --vault <vault-root>
 
 在**单独获准的测试根目录**，先将 `KNOWLEDGEOS_PROTECTED_VAULT` 设为真实受保护库路径，再使用 `python markdown_native.py --vault <test-root> sync` 或以 `--native-write` 启动 MCP。测试根的创建、更新、删除与恢复遵循范围约束。外部编辑可在后续同步时发现，并可能与其他编辑器并发。
 
+### 已安装的 CLI
+
+`knowledgeos --vault <vault-root> doctor` 展示读取范围。使用 `query` 检索，或通过 `inspect` 执行结构化读取并生成 Human 提案。可将[配置示例](config/knowledgeos.example.toml)复制到私有位置，再传给 `--config`。
+
+`ingest` 起草来源页，`synthesize` 将至少两篇笔记整理为综合脚手架。两者仅在获准测试根下使用 `--apply` 才写入。摄取按内容哈希保留原件并记录出处，后续建页失败时可能保留原件。`append-section` 和 `archive` 都校验基础 SHA-256。归档更新状态并保留原路径，`restore` 按备份哈希恢复。参见[日常示例](examples/README.md)及[可选测试库](vault-template/README.md)。
+
 ### 高级选项：严格模式
 
 严格模式使用独立 Windows 主体、Broker、Secure Writer 和 SQLite，需要 `pywin32`、可信合成部署、受保护根配置以及预先配置的身份和 ACL。在该环境中以 `--synthetic-write-config` 启动服务。Publisher 保持禁用。 [架构说明](docs/Architecture.md)
 
 ## 项目与来源
 
-项目尚待 GitHub 发布。附带的 Core 模块来自 KnowledgeOS Agent Kit，保留上游 MIT 许可证。 [上游许可证](knowledgeos/LICENSE)
+KnowledgeOS 0.1.3 整合了 Agent Kit 0.1.1 的 Core 源码，保留上游 MIT 声明。[许可证](LICENSE) · [变更记录](CHANGELOG.md)

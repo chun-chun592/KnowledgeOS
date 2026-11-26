@@ -9,7 +9,7 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
-PROGRAM = Path(__file__).with_name("server.py")
+PROGRAM = Path(__file__).resolve().parents[1] / "server.py"
 PREFIX = "10_Agent/wiki/"
 
 
@@ -76,7 +76,7 @@ def test_scoped_tool_protocol(fixture):
                 assert {"direction": "backlink", "target": PREFIX + "agent.md"} in reverse
                 kinds = {issue["kind"] for issue in (await call("lint_knowledge"))["items"]}
                 assert {"duplicate_body", "properties", "not_resolved_in_scope"} <= kinds
-                assert (await call("write_capability"))["code"] == "SECURE_WRITER_UNAVAILABLE"
+                assert (await call("write_capability"))["code"] == "READ_ONLY"
                 assert (await call("check_change", path=PREFIX + "agent.md", operation="update",
                                    expected_sha256=note["sha256"]))["may_submit"] is False
                 assert (await call("check_change", path="00_Human/private.md", operation="update"))["code"] == "HUMAN_WRITE_AUTHORIZATION_REQUIRED"

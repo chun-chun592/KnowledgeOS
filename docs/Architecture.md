@@ -28,3 +28,17 @@ Automatic Human writes stay disabled, and the Agent prepares complete proposals 
 This public candidate contains the sanitized architecture summary. Machine bindings, operational evidence, and original historical sources remain local.
 
 [ADR-04 secure projection addendum](ADR04-Secure-Projection.md)
+
+### 分发与继承 / Distribution and Provenance
+
+产品版本为 0.1.3；Agent Kit 0.1.1 提供原 Core、索引渲染及分段编辑逻辑，许可证及归属保留。\
+The product version is 0.1.3. Agent Kit 0.1.1 provides the original Core, index rendering, and section editing logic, with its license and attribution retained.
+
+日常安装使用标准 Python 包，严格模式通过可选 Windows 依赖和既有合成配置启动。\
+Daily use uses the standard Python package. Strict mode uses optional Windows dependencies and an existing synthetic configuration.
+
+在设有共享锁目录的测试库中，原生编辑和同步使用既有锁文件命名；未配置共享目录时，仅有本地原生进程协调。\
+Native changes and sync use the existing lease filenames in test vaults with a shared lock directory. Without that directory, coordination is limited to local Native processes.
+
+全量同步保留索引托管块外文字；现有真实库继续按其协议逐行更新索引并追加日志。\
+Full sync preserves text outside the managed index block. The existing real vault continues to use its own protocol for targeted index edits and log appends.

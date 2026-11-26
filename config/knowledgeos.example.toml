@@ -1,0 +1,3 @@
+vault = "/path/to/existing-vault"
+# Add only the precise approved Human scope.
+human_read = []
