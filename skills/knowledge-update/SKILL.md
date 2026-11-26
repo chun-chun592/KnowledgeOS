@@ -19,3 +19,6 @@ In a separate Native test root, use native_note_change or knowledgeos update or 
 
 只在可选且可用的严格合成模式中提交已验证文件身份及原幂等键；以 COMMITTED 核验提交，OUTCOME_UNKNOWN 先查询原键。\
 Only available synthetic Strict mode uses verified file identity and idempotency keys. Confirm COMMITTED; after OUTCOME_UNKNOWN query the original key.
+
+使用当前模式允许的工具。真实库获准的 Agent 修改须检查租约和基础 SHA-256，保留备份及历史来源，复核后定点同步。Human 变更以完整 Markdown 和 diff 交付。\
+Use tools permitted by the current mode. For approved real-vault Agent edits, check the lease and base SHA-256, preserve backups and provenance, and verify before targeted synchronization. Deliver Human changes as complete Markdown and a diff.

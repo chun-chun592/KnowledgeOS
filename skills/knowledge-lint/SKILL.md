@@ -19,3 +19,6 @@ Choose MCP, the KnowledgeOS CLI, or native file tools based on the host and appr
 
 无法提交修复时，仍返回可核对的发现和修改计划。\
 When repairs cannot be applied, return verifiable findings and a proposed repair plan.
+
+按当前 Schema 检查分类、元数据及来源，区分失效链接、歧义与内容重复。只修复获准 Agent 路径，Human 问题交付发现或提案。\
+Check classification, metadata, and provenance against the current schema. Distinguish broken links, ambiguity, and duplicate content. Repair only approved Agent paths and report Human issues or propose changes.

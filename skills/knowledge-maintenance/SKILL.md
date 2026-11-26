@@ -16,3 +16,6 @@ In a separate Native test root, use native_note_change or knowledgeos restore wi
 
 可选严格模式独立使用 knowledge_audit、文件身份及事务键，派生文件待修复时用 sync_agent_wiki 或 Broker CLI 的 sync_wiki。\
 Optional Strict mode uses knowledge_audit, file identity, and transaction keys. For pending projections, use sync_agent_wiki or the Broker CLI sync_wiki operation.
+
+真实库定点核对索引、日志、反向引用及受影响备份，避免覆盖既有分组和统计。仅在独立测试根调用适用的 Native 同步工具；协作租约按当前库规则处理。\
+In the real vault, check the affected index entries, log, backlinks, and backups while preserving established groups and statistics. Use applicable Native sync tools only in an independent test root and follow the current vault lease rules.

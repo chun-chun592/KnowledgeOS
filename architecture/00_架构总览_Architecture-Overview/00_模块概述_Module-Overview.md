@@ -14,5 +14,5 @@ Daily Markdown Native uses any editor, host Skills, read-only MCP or CLI, and ap
 
 ## 继续阅读 / Continue Reading
 
-[系统架构](../01_系统架构_System-Architecture/00_模块概述_Module-Overview.md)说明组件和数据流，[知识架构](../07_知识架构_Knowledge-Architecture/00_模块概述_Module-Overview.md)说明目录及字段。\
-See [system architecture](../01_系统架构_System-Architecture/00_模块概述_Module-Overview.md) for components and data flow, and [knowledge architecture](../07_知识架构_Knowledge-Architecture/00_模块概述_Module-Overview.md) for directories and fields.
+[系统架构](01_组件与数据流_Components-and-Data-Flow.md)说明组件和数据流，[知识架构](../02_知识架构_Knowledge-Architecture/00_知识目录_Knowledge-Layout.md)说明目录及字段。\
+See [system architecture](01_组件与数据流_Components-and-Data-Flow.md) for components and data flow, and [knowledge architecture](../02_知识架构_Knowledge-Architecture/00_知识目录_Knowledge-Layout.md) for directories and fields.

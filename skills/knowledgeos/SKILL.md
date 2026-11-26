@@ -16,3 +16,6 @@ Combine knowledge-query, knowledge-ingest, knowledge-research, knowledge-synthes
 
 先检索及查重，核对来源后优先更新现有笔记；真实库用已批准的原生编辑流程，Human 变更交付提案。\
 Search and check for overlap first, then prefer an existing note after reviewing sources. Use the vault's approved native edit workflow and deliver proposals for Human changes.
+
+先从 AGENTS.md 与实际目录识别知识主体和模式，再按任务按需组合 Skills。已知任务可以直接选择相应 Skill。\
+Identify the knowledge owners and mode from AGENTS.md and the actual tree, then combine Skills as needed. A known task can use its relevant Skill directly.
