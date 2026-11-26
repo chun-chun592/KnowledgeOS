@@ -13,3 +13,6 @@ When MCP is available, choose search_knowledge, read_markdown, note_metadata, qu
 
 跨主体检索时分别查看获准的 Human 和 Agent 范围；工具支持主体筛选时再使用该参数。标识主体、相对路径、覆盖范围和缺口。空结果仅代表已搜索范围。\
 Search authorized Human and Agent scopes separately for cross-subject questions and use a subject parameter where supported. Report subject, relative path, coverage, and gaps. Empty results apply only to the scope searched.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

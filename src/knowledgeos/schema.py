@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import json
 import re
+import stat
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable, Literal
 
 from .errors import ValidationError
+from .layout import Layout, detect_layout
 
 TYPE_DIRS: dict[str, str] = {
     "concept": "concepts",
@@ -413,14 +415,20 @@ def _is_date(value: Any) -> bool:
         return False
 
 
-def load_schema(vault_root: Path | None = None) -> dict[str, Any]:
+def load_schema(vault_root: Path | None = None, *, layout: Layout | None = None) -> dict[str, Any]:
     if vault_root:
-        path = vault_root / "30_System" / "schemas" / "frontmatter.schema.json"
-        if path.is_file():
-            try:
-                return json.loads(path.read_text(encoding="utf-8-sig"))
-            except (OSError, json.JSONDecodeError):
-                pass
+        layout = layout or detect_layout(vault_root)
+        path = vault_root / layout.path("30_System/schemas/frontmatter.schema.json")
+        try:
+            info = path.lstat()
+            if (path.resolve(strict=True) == path.absolute() and stat.S_ISREG(info.st_mode)
+                    and info.st_nlink == 1 and info.st_size <= 1024 * 1024
+                    and not getattr(info, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+                data = json.loads(path.read_text(encoding="utf-8-sig"))
+                if isinstance(data, dict):
+                    return data
+        except (OSError, ValueError):
+            pass
     return BUILTIN_SCHEMA
 
 
@@ -473,6 +481,7 @@ def validate_document(
     *,
     schema: dict[str, Any] | None = None,
     check_location: bool = True,
+    layout: Layout = Layout(),
 ) -> list[Issue]:
     issues: list[Issue] = []
     rel = document.rel
@@ -530,19 +539,19 @@ def validate_document(
 
     if check_location:
         parts = document.rel.split("/")
-        if len(parts) >= 3 and parts[1] == "wiki":
+        if len(parts) >= 3 and parts[1] == layout.wiki.name:
             if data.get("owner") != "agent":
                 error("owner.wiki", "Agent wiki pages must declare 'owner: agent'.")
             expected = TYPE_DIRS.get(note_type)
-            if note_type and expected and len(parts) >= 4 and parts[2] != expected:
+            if note_type and expected and len(parts) >= 4 and parts[2] != layout.path("10_Agent/wiki/" + expected).name:
                 error(
                     "type.location",
-                    f"Type '{note_type}' belongs in wiki/{expected}/, not wiki/{parts[2]}/.",
+                    f"Type {note_type!r} belongs in {layout.path('10_Agent/wiki/' + expected)}/.",
                 )
             stem = Path(parts[-1]).stem
             if stem not in {"index", "log"} and not KEBAB_RE.match(stem):
                 warning("filename.style", "Use ASCII kebab-case file names for wiki pages.")
-        elif len(parts) >= 3 and parts[1] == "raw":
+        elif len(parts) >= 3 and parts[1] == layout.path("10_Agent/raw").name:
             if note_type == "source" and data.get("owner") != "agent":
                 error("owner.raw", "Raw source notes must declare 'owner: agent'.")
 

@@ -55,3 +55,5 @@ The tree expands the established logical directories and verified subdirectories
 ```
 
 [Human 知识 / Human knowledge](../03_人类知识_Human-Knowledge/00_目录与知识地图_Directories-and-Maps.md) · [Agent 知识 / Agent knowledge](../04_智能体知识_Agent-Knowledge/00_原始资料与知识编译_Raw-and-Knowledge-Compilation.md) · [通用模板 / Generic template](../../vault-template/README.md)
+
+[三语言目录及完整映射 / Three layouts and complete path mapping](01_三语目录对照_Localized-Paths.md)

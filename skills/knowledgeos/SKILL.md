@@ -19,3 +19,6 @@ Search and check for overlap first, then prefer an existing note after reviewing
 
 先从 AGENTS.md 与实际目录识别知识主体和模式，再按任务按需组合 Skills。已知任务可以直接选择相应 Skill。\
 Identify the knowledge owners and mode from AGENTS.md and the actual tree, then combine Skills as needed. A known task can use its relevant Skill directly.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

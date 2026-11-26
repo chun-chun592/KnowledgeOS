@@ -18,8 +18,9 @@ from pathlib import Path, PurePosixPath
 from typing import Annotated, Literal
 from urllib.parse import unquote
 
-from knowledgeos.schema import Document, parse_text
-from knowledgeos.search import META_FILES, extract_links
+from knowledgeos.layout import LOCALES, Layout, detect_layout
+from knowledgeos.schema import Document, load_schema, parse_text, validate_document
+from knowledgeos.search import extract_links
 from mcp.server.fastmcp import FastMCP
 from mcp.server.fastmcp.exceptions import ToolError
 from mcp.types import ToolAnnotations
@@ -43,7 +44,8 @@ Subject = Literal["agent", "human", "all"]
 
 
 def subject_of(path: str) -> str:
-    return "human" if PurePosixPath(path).parts[0] == HUMAN.name else "agent"
+    return "human" if any(PurePosixPath(path).parts[0] == Layout(locale).human.name
+                          for locale in LOCALES) else "agent"
 
 
 def safe_name(value: str) -> bool:
@@ -150,9 +152,10 @@ class Wiki:
         self.root = root.absolute()
         if self.root.resolve(strict=True) != self.root or is_link(self.root):
             raise ValueError("Vault root must be a canonical plain directory")
-        self.scopes = [SCOPE]
+        self.layout = detect_layout(self.root)
+        self.scopes = [self.layout.wiki]
         for grant in human_read:
-            if not safe_name(grant) or not PurePosixPath(grant).is_relative_to(HUMAN):
+            if not safe_name(grant) or not PurePosixPath(grant).is_relative_to(self.layout.human):
                 raise ValueError("Expected a Human-relative directory scope")
             scope = PurePosixPath(grant)
             if not any(scope.is_relative_to(previous) for previous in self.scopes):
@@ -330,7 +333,7 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         for note in notes:
             doc = note.document
             tags = strings(doc.frontmatter.get("tags"))
-            if doc.path.name.casefold() in META_FILES or (tag and tag.casefold().lstrip("#") not in {t.casefold().lstrip("#") for t in tags}):
+            if doc.path.name.casefold() in wiki.layout.meta or (tag and tag.casefold().lstrip("#") not in {t.casefold().lstrip("#") for t in tags}):
                 continue
             heading = " ".join([doc.title, *strings(doc.frontmatter.get("aliases")), *tags]).casefold()
             body = doc.body.casefold()
@@ -357,7 +360,7 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
     @server.tool(annotations=RO)
     def propose_human_update(path: NotePath, expected_sha256: str, markdown: str) -> dict:
         """Compare complete proposed Markdown with a readable Human note for manual application."""
-        if HUMAN not in PurePosixPath(path).parents:
+        if wiki.layout.human not in PurePosixPath(path).parents:
             raise ToolError("PATH_DENIED: expected a Human Markdown path")
         note = wiki.read(path)
         if expected_sha256 != note.sha256:
@@ -418,13 +421,17 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         graph = Graph(notes, attachments)
         bodies: dict[str, list[str]] = defaultdict(list)
         issues = []
+        schema = load_schema(wiki.root, layout=wiki.layout)
         for note in notes:
             if subject != "all" and subject != subject_of(note.path):
                 continue
             doc = note.document
-            if doc.path.name.casefold() not in META_FILES:
+            if doc.path.name.casefold() not in wiki.layout.meta:
                 if doc.error or not isinstance(doc.frontmatter.get("title"), str) or not doc.frontmatter.get("title", "").strip():
                     issues.append({"path": note.path, "kind": "properties", "detail": "Invalid frontmatter or missing title"})
+                if "type" in doc.frontmatter and wiki.layout.wiki in PurePosixPath(note.path).parents:
+                    issues.extend({"path": note.path, "kind": issue.code, "detail": issue.message}
+                                  for issue in validate_document(doc, schema=schema, layout=wiki.layout))
                 body = " ".join(doc.body.split()).casefold()
                 if body:
                     bodies[hashlib.sha256(body.encode()).hexdigest()].append(note.path)
@@ -474,6 +481,9 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
                 raise ToolError(str(exc)) from None
 
     if write_endpoint is not None:
+        if wiki.layout.locale != "en-US":
+            raise ValueError("Strict mode requires the existing en-US synthetic layout")
+
         @server.tool(annotations=ToolAnnotations(readOnlyHint=False, idempotentHint=True))
         def sync_agent_wiki() -> dict:
             """Retry or rebuild the synthetic Agent index and log through Broker and Writer."""
@@ -531,10 +541,10 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         target = PurePosixPath(path)
         if not safe_name(path) or not path.casefold().endswith(".md"):
             raise ToolError("PATH_DENIED: expected a Vault-relative Markdown path")
-        if HUMAN in target.parents:
+        if wiki.layout.human in target.parents:
             return {"code": "HUMAN_WRITE_AUTHORIZATION_REQUIRED", "operation": operation,
                     "subject": "human", "may_submit": False}
-        if SCOPE not in target.parents or target.name.casefold() in META_FILES:
+        if wiki.layout.wiki not in target.parents or target.name.casefold() in wiki.layout.meta:
             raise ToolError("PATH_DENIED: expected a knowledge note in the Agent Wiki")
         if (operation == "update") != (expected_sha256 is not None):
             raise ToolError("INVALID_PLAN: update requires a SHA-256; create expects absence")

@@ -13,3 +13,6 @@ Return findings directly for temporary questions or research. For autonomous lea
 
 根据宿主和授权范围选择 MCP、CLI 或原生工具。Human 知识修改只交付提案。\
 Choose MCP, CLI, or native tools according to the host and approved scope. Deliver changes to Human notes as proposals only.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

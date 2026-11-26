@@ -19,3 +19,5 @@ Strict transactions use evidence such as PREPARED, verified projection, COMMITTE
 
 PREPARED 包含旧内容、暂存、目标和父目录证据；仅状态为 PREPARED 无法证明替换是否发生。若路径缺失、文件身份不明、摘要相同但身份不同或证据冲突，保留现场供复核，不覆盖或重试。\
 PREPARED records old content, staging, target, and parent evidence. The PREPARED state alone cannot prove whether replacement occurred. Preserve missing paths, unknown identities, matching hashes with different identities, or conflicting evidence for review without overwriting or retrying.
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)

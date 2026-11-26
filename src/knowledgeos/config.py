@@ -20,6 +20,8 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
+from .layout import Layout, detect_layout
+
 from .errors import ConfigError, VaultNotFoundError, VaultStructureError
 
 try:  # Python 3.11+
@@ -67,6 +69,7 @@ class Config:
     lock_timeout: float = 10.0
     lock_stale_after: float = 300.0
     config_path: Path | None = None
+    layout: Layout = Layout()
 
     # -- derived helpers -------------------------------------------------
     @property
@@ -99,19 +102,19 @@ class Config:
 
     @property
     def write_requests_path(self) -> Path:
-        return self.exchange_path / "write-requests"
+        return self.exchange_path / self.layout.path("20_Exchange/write-requests").name
 
     @property
     def index_path(self) -> Path:
-        return self.wiki_path / "index.md"
+        return self.wiki_path / self.layout.path("10_Agent/wiki/index.md").name
 
     @property
     def log_path(self) -> Path:
-        return self.wiki_path / "log.md"
+        return self.wiki_path / self.layout.path("10_Agent/wiki/log.md").name
 
     @property
     def schema_path(self) -> Path:
-        return self.system_path / "schemas" / "frontmatter.schema.json"
+        return self.system_path.joinpath(*self.layout.path("30_System/schemas/frontmatter.schema.json").parts[1:])
 
     @property
     def gitignore_path(self) -> Path:
@@ -159,9 +162,10 @@ def looks_like_vault(path: Path) -> bool:
     """A KnowledgeOS vault has the agent and system areas (paths configurable)."""
     if not path.is_dir():
         return False
+    layout = detect_layout(path)
     markers = [
-        path / "10_Agent",
-        path / "30_System",
+        path / layout.path("10_Agent"),
+        path / layout.path("30_System"),
         path / "AGENTS.md",
     ]
     return all(marker.exists() for marker in markers)
@@ -200,7 +204,7 @@ def discover_vault(start: Path | str | None = None) -> Path:
 
 
 def default_config(vault: Path | str) -> Config:
-    return Config(vault=Path(vault).expanduser().resolve())
+    return config_from_data(Path(vault).expanduser().resolve(), {})
 
 
 def _read_toml(path: Path) -> dict[str, Any]:
@@ -236,7 +240,9 @@ def config_from_data(vault: Path, data: dict[str, Any], source: Path | None = No
     agent_id = normalize_agent_id(str(agent_cfg.get("id", DEFAULT_AGENT_ID)))
 
     resolved: dict[str, str] = {}
+    layout = detect_layout(vault)
     for key, default in _TOP_LEVEL_DIRS.items():
+        default = layout.path(default).name
         value = str(paths_cfg.get(key, default) or default).strip().strip("/\\")
         if not value or value in {".", ".."} or "/" in value or "\\" in value:
             raise ConfigError(f"paths.{key} must be a single top-level directory name.")
@@ -266,6 +272,9 @@ def config_from_data(vault: Path, data: dict[str, Any], source: Path | None = No
         lock_timeout=max(0.0, lock_timeout),
         lock_stale_after=max(5.0, lock_stale),
         config_path=source,
+        layout=layout,
+        raw_subdir=layout.path("10_Agent/raw").name,
+        wiki_subdir=layout.wiki.name,
     )
 
 
@@ -302,7 +311,7 @@ def load_config(
         if not looks_like_vault(root):
             raise VaultStructureError(
                 f"{root} does not look like a KnowledgeOS vault (missing "
-                f"{root / '10_Agent'} or {root / '30_System'}). "
+                 "standard Agent/System directories or AGENTS.md). "
                 "Use `knowledgeos init --help` to install the framework."
             )
         config = default_config(root)
@@ -333,7 +342,7 @@ language = "en"
 
 [agent]
 id = "{agent_id}"
-# Agents must present an approved write request to modify 00_Human/**.
+# Human changes are proposals for manual application.
 require_write_request = true
 
 [paths]

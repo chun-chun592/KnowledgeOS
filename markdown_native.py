@@ -13,11 +13,9 @@ import sys
 from tempfile import NamedTemporaryFile
 from uuid import uuid4
 
-from server import MAX_BYTES, SCOPE, Wiki, checked_handle, is_link, safe_name
+from server import MAX_BYTES, Wiki, checked_handle, is_link, safe_name
 from knowledgeos.index_format import render_block
 from mcp.server.fastmcp.exceptions import ToolError
-
-META = {"index.md", "log.md", "readme.md"}
 
 
 def digest(data):
@@ -67,7 +65,10 @@ class NativeWiki:
     def __init__(self, wiki):
         self.wiki = wiki
         self.root = wiki.root
-        self.base = self.root / SCOPE
+        self.layout = wiki.layout
+        self.base = self.root / self.layout.wiki
+        self.index = self.layout.path("10_Agent/wiki/index.md")
+        self.log = self.layout.path("10_Agent/wiki/log.md")
         self.state = self.base / ".knowledgeos-native"
         real = protected_vault().resolve()
         if (self.root.resolve().is_relative_to(real)
@@ -85,12 +86,12 @@ class NativeWiki:
         lock.mkdir()
         try:
             with ExitStack() as stack:
-                folder = self.root / "20_Exchange/agent-to-agent/locks"
+                folder = self.root / self.layout.path("20_Exchange/agent-to-agent/locks")
                 if os.path.lexists(folder):
                     if folder.resolve(strict=True) != folder or is_link(folder) or not folder.is_dir():
                         raise ValueError("unsafe shared lease directory")
                     now = datetime.now(timezone.utc)
-                    for relative in sorted(set(notes) | {"10_Agent/wiki/index.md", "10_Agent/wiki/log.md"}):
+                    for relative in sorted(set(notes) | {self.index.as_posix(), self.log.as_posix()}):
                         path = folder / (relative.replace("/", "-").replace(".", "-") + ".lock.md")
                         payload = ("---\nlock: true\npath: " + json.dumps(relative) + "\nowner: knowledgeos-native\n"
                                    f"acquired: {now.isoformat()}\nexpires: {(now + timedelta(minutes=15)).isoformat()}\n"
@@ -109,8 +110,8 @@ class NativeWiki:
 
     def target(self, path):
         rel = PurePosixPath(path)
-        if (not safe_name(path) or SCOPE not in rel.parents or rel.suffix != ".md"
-                or rel.name.casefold() in META):
+        if (not safe_name(path) or self.layout.wiki not in rel.parents or rel.suffix != ".md"
+                or rel.name.casefold() in self.layout.meta):
             raise ValueError("PATH_DENIED: expected an Agent Markdown note")
         target = self.root / path
         if target.parent.resolve(strict=True) != target.parent:
@@ -143,7 +144,7 @@ class NativeWiki:
         documents = []
         for note in notes:
             relative = PurePosixPath(note.path)
-            if relative.name.casefold() in META:
+            if relative.name.casefold() in self.layout.meta:
                 continue
             data = read_file(self.root / note.path)
             if data is None or digest(data) != note.sha256:
@@ -170,8 +171,8 @@ class NativeWiki:
         if payload != original:
             publish(state_file, payload, original)
         log = ["    " + json.dumps(event, ensure_ascii=False) for event in record["events"]]
-        self.project("index.md", "index", render_block(documents).splitlines()[1:-1])
-        self.project("log.md", "native-observations", log)
+        self.project(self.index.name, "index", render_block(documents).splitlines()[1:-1])
+        self.project(self.log.name, "native-observations", log)
         return {"code": "NATIVE_SYNCED", "notes": len(observed), "events": len(record["events"])}
 
     def project(self, name, block, rows):

@@ -22,3 +22,6 @@ Only available synthetic Strict mode uses verified file identity and idempotency
 
 使用当前模式允许的工具。真实库获准的 Agent 修改须检查租约和基础 SHA-256，保留备份及历史来源，复核后定点同步。Human 变更以完整 Markdown 和 diff 交付。\
 Use tools permitted by the current mode. For approved real-vault Agent edits, check the lease and base SHA-256, preserve backups and provenance, and verify before targeted synchronization. Deliver Human changes as complete Markdown and a diff.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

@@ -18,3 +18,5 @@ Local stdio MCP provides search_knowledge, read_markdown, note_metadata, query_t
 Native test MCP uses native_note_change and sync_native_wiki. The CLI writes and syncs only in an independent test root. Strict synthetic interfaces separately handle submission, transaction status, recovery, and audit with Broker-specific identity, keys, and bounds.
 
 [实际能力矩阵 / Actual Capability Matrix](Modes/00_实际能力矩阵_Capability-Matrix.md)
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)

@@ -57,7 +57,7 @@ knowledgeos-mcp --vault <vault-root>
 
 `knowledgeos --vault <vault-root> doctor` 展示读取范围。使用 `query` 检索，或通过 `inspect` 执行结构化读取并生成 Human 提案。可将[配置示例](config/knowledgeos.example.toml)复制到私有位置，再传给 `--config`。
 
-`ingest` 起草来源页，`synthesize` 将至少两篇笔记整理为综合脚手架。两者仅在获准测试根下使用 `--apply` 才写入。摄取按内容哈希保留原件并记录出处，后续建页失败时可能保留原件。`append-section` 和 `archive` 都校验基础 SHA-256。归档更新状态并保留原路径，`restore` 按备份哈希恢复。参见[日常示例](examples/README.md)及[可复用知识库模板](vault-template/README.md)。
+`ingest` 起草来源页，`synthesize` 将至少两篇笔记整理为综合脚手架。两者仅在获准测试根下使用 `--apply` 才写入。摄取按内容哈希保留原件并记录出处，后续建页失败时可能保留原件。`append-section` 和 `archive` 都校验基础 SHA-256。归档更新状态并保留原路径，`restore` 按备份哈希恢复。参见[日常示例](examples/README.md)及[英文、简体中文与中英双语知识库模板](vault-template/README.md)。
 
 ### 高级选项：严格模式
 

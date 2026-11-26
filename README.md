@@ -57,7 +57,7 @@ For a **separate approved test root**, set `KNOWLEDGEOS_PROTECTED_VAULT` to your
 
 `knowledgeos --vault <vault-root> doctor` reports readable scopes. Use `query` for search and `inspect` for structured reads and Human proposals. The [configuration example](config/knowledgeos.example.toml) can be copied to a private location and supplied with `--config`.
 
-`ingest` drafts a source page, and `synthesize` drafts a scaffold from at least two notes. They require `--apply` for writes to an approved test root. Intake preserves an original by digest and records provenance. The original can remain if creating the source page later fails. `append-section` and `archive` check the base SHA-256. Archive sets the note status while keeping its path, and `restore` uses a backup hash. Start with the [examples](examples/README.md) or [reusable vault template](vault-template/README.md).
+`ingest` drafts a source page, and `synthesize` drafts a scaffold from at least two notes. They require `--apply` for writes to an approved test root. Intake preserves an original by digest and records provenance. The original can remain if creating the source page later fails. `append-section` and `archive` check the base SHA-256. Archive sets the note status while keeping its path, and `restore` uses a backup hash. Start with the [examples](examples/README.md) or [English, Simplified Chinese, and bilingual vault templates](vault-template/README.md).
 
 ### Advanced option: Strict mode
 

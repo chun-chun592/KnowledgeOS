@@ -19,3 +19,6 @@ Choose MCP, the KnowledgeOS CLI, or native file tools based on the host and appr
 
 整理相互支持与冲突的证据，明确结论适用范围，再决定引用、补充已有页或新建。保留原始来源及不确定性。\
 Organize supporting and conflicting evidence, define where each conclusion applies, then decide whether to cite, extend, or create a note. Retain original sources and uncertainty.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

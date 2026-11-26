@@ -16,6 +16,7 @@ from server import Wiki, make_server
 
 from . import __version__
 from .errors import ValidationError
+from .layout import LOCALES, Layout
 from .schema import render_frontmatter
 from .sections import _append_section
 
@@ -26,13 +27,13 @@ READ_TOOLS = ("search_knowledge", "read_markdown", "note_metadata", "query_tags"
               "knowledge_links", "lint_knowledge", "propose_human_update")
 
 
-def initialize(root):
+def initialize(root, locale="en-US"):
     if root.resolve(strict=True) != root or root.is_relative_to(protected_vault()) or any(root.iterdir()):
         raise ValueError("init requires an empty canonical test root outside the protected vault")
     folders = (*(WIKI / name for name in ("concepts", "entities", "topics", "comparisons", "synthesis", "projects", "decisions")),
                RAW, Path("00_Human/Resources"), Path("20_Exchange/agent-to-agent/locks"), Path("30_System"), Path("90_Archive"))
     for folder in folders:
-        (root / folder).mkdir(parents=True, exist_ok=True)
+        (root / Layout(locale).path(folder.as_posix())).mkdir(parents=True, exist_ok=True)
     return {"code": "TEST_ROOT_INITIALIZED"}
 
 
@@ -73,7 +74,8 @@ def ingest(wiki, args):
         raise ValueError("Expected a nonempty original")
     checksum = sha256(original).hexdigest()
     suffix = source.suffix.lower()
-    relative = (RAW / (checksum + (suffix if re.fullmatch(r"\.[a-z0-9]{1,10}", suffix) else ".bin"))).as_posix()
+    raw = wiki.layout.path(RAW.as_posix())
+    relative = (raw / (checksum + (suffix if re.fullmatch(r"\.[a-z0-9]{1,10}", suffix) else ".bin"))).as_posix()
     markdown = (scaffold(args.title, "source", [f"[[{relative}]]"])
                 + f"\n## Provenance\n\n- Original file: {json.dumps(source.name, ensure_ascii=False)}"
                 + f"\n- SHA-256: {checksum}\n\n## Summary\n")
@@ -82,7 +84,7 @@ def ingest(wiki, args):
     native = NativeWiki(wiki)
     if read_file(native.target(args.path)) is not None:
         raise ValueError("CONFLICT: source page exists")
-    folder = wiki.root / RAW
+    folder = wiki.root / raw
     if folder.resolve(strict=True) != folder or not folder.is_dir():
         raise ValueError("Expected an existing plain original-source directory")
     target = wiki.root / relative
@@ -106,7 +108,9 @@ def parser():
     cli.add_argument("--human-read", action="append", default=[])
     sub = cli.add_subparsers(dest="operation", required=True)
     for name in ("init", "doctor", "sync"):
-        sub.add_parser(name)
+        command = sub.add_parser(name)
+        if name == "init":
+            command.add_argument("--locale", choices=LOCALES, default="en-US")
     sub.add_parser("inspect").add_argument("tool", choices=READ_TOOLS)
     sub.add_parser("query").add_argument("query")
     for name in ("create", "update", "delete", "restore", "archive", "append-section", "ingest", "synthesize"):
@@ -139,11 +143,11 @@ def run(args):
     root = root.absolute()
     op = args.operation
     if op == "init":
-        return initialize(root)
+        return initialize(root, args.locale)
     wiki = Wiki(root, tuple(args.human_read or config.get("human_read", ())))
     if op == "doctor":
         notes, skipped, _ = wiki.snapshot()
-        return {"code": "READ_READY", "notes": len(notes), "skipped": skipped, "scopes": list(map(str, wiki.scopes))}
+        return {"code": "READ_READY", "notes": len(notes), "skipped": skipped, "locale": wiki.layout.locale, "scopes": list(map(str, wiki.scopes))}
     if op in {"query", "inspect"}:
         name, request = ("search_knowledge", {"query": args.query}) if op == "query" else (args.tool, json.load(sys.stdin))
         tool = make_server(wiki)._tool_manager.get_tool(name)

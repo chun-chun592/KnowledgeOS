@@ -16,3 +16,5 @@ CLI and native file tools work independently. For MCP, use knowledgeos-mcp --vau
 
 测试根 Native 写入需要与受保护库分开并保留根保护。严格模式另需可选依赖、既有合成配置、独立身份和受保护 IPC。旧 Windows 部署研究不用于日常安装。\
 Native test writes require a separate root and preserve protected-root checks. Strict mode separately requires optional dependencies, existing synthetic configuration, distinct principals, and protected IPC. Historical Windows deployment research does not apply to daily installation.
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)

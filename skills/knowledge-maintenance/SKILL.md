@@ -19,3 +19,6 @@ Optional Strict mode uses knowledge_audit, file identity, and transaction keys. 
 
 真实库定点核对索引、日志、反向引用及受影响备份，避免覆盖既有分组和统计。仅在独立测试根调用适用的 Native 同步工具；协作租约按当前库规则处理。\
 In the real vault, check the affected index entries, log, backlinks, and backups while preserving established groups and statistics. Use applicable Native sync tools only in an independent test root and follow the current vault lease rules.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

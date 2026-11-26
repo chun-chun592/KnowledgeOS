@@ -10,3 +10,5 @@ For a Human change, deliver the target, rationale, base SHA-256, full Markdown, 
 Shared edits require a lease and backup. Recheck the hash before saving, and reread and review conflicts. Update index entries in place and append to the log. See [leases and handoff](Concurrency/00_租约与交接_Leases-and-Handoff.md).
 
 [租约、冲突与交接 / Leases, Conflicts, and Handoff](Concurrency/00_租约与交接_Leases-and-Handoff.md)
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)

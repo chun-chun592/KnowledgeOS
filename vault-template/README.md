@@ -1,10 +1,12 @@
-# 知识库模板 / Vault Template
+# Choose a KnowledgeOS vault template
 
-将本目录完整复制到新的空目录，保留各级子目录和根 [AGENTS.md](AGENTS.md)；已有库只读对照所需部分。
-Copy this entire directory to a new empty location and retain the nested directories and root [AGENTS.md](AGENTS.md). Use it as a reference for an existing vault.
+Copy the contents of one complete template into an empty directory. Keep AGENTS.md at the root.
 
-`knowledgeos init` 只生成运行时定义的基础骨架。此目录另提供完整通用结构、Schema、写作模板和协作协议。
-`knowledgeos init` scaffolds the runtime-defined subset. This directory also supplies the complete generic layout, schema, note templates, and collaboration rules.
+- [English](en-US/README.md)
+- [中文](zh-CN/使用说明.md)
+- [Bilingual / 中英双语](zh-en/README_使用说明.md)
+- [中文使用说明](README.zh-CN.md)
 
-查看 [系统说明](30_System/README.md)及[日常工作协议](30_System/workflows/knowledge-routing.md)。模板内容继承自原始 Agent Kit，并按现行授权规则整理。
-See the [system guide](30_System/README.md) and [daily workflow](30_System/workflows/knowledge-routing.md). Templates derive from the original Agent Kit and follow current ownership rules.
+Existing English vaults keep their current paths. For scripts referencing the former template root, use vault-template/en-US. Do not overlay or rename an existing vault. Set each Human read grant to the actual localized relative directory. The layout does not constrain the language of notes.
+
+The CLI detects the standard layout using region names. Use `knowledgeos --vault <path> doctor` to check it. For a development scaffold, `knowledgeos --vault <empty-path> init --locale zh-CN` selects the layout. Copy a full template for the complete files. MCP and CLI writes remain limited to approved separate test roots. Optional Strict mode keeps its en-US synthetic contract.

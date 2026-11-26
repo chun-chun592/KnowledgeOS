@@ -22,3 +22,5 @@ The Strict ledger uniquely associates the authenticated principal and idempotenc
 
 严格投影替换与 SQLite 提交不是同一次操作。直接读取者可能在账本确认之前看到新的完整文件，故严格业务结果应从账本核实。\
 Strict projection replacement and SQLite commit are separate operations. Direct readers may see a complete new file before the ledger confirms it, so verify Strict business outcomes against the ledger.
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)

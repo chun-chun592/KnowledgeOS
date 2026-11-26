@@ -1,0 +1,71 @@
+# 三语目录对照 / Localized Vault Paths
+
+目录语言不限制正文语言。以区域目录识别版本，混合标记会被拒绝。读取授权用实际相对路径；严格合成模式仍限英文布局。
+
+The directory language does not constrain note text. Region markers identify the layout, and mixed markers are rejected. Read grants use actual relative paths. Optional synthetic Strict mode still uses the English layout.
+
+| en-US | zh-CN | zh-en |
+| --- | --- | --- |
+| `00_Human` | `00_个人知识库` | `00_Human_个人知识库` |
+| `00_Human/Archive` | `00_个人知识库/归档` | `00_Human_个人知识库/Archive_归档` |
+| `00_Human/Areas` | `00_个人知识库/长期领域` | `00_Human_个人知识库/Areas_长期领域` |
+| `00_Human/Attachments` | `00_个人知识库/附件` | `00_Human_个人知识库/Attachments_附件` |
+| `00_Human/Clippings` | `00_个人知识库/剪藏` | `00_Human_个人知识库/Clippings_剪藏` |
+| `00_Human/Daily` | `00_个人知识库/日常笔记` | `00_Human_个人知识库/Daily_日常笔记` |
+| `00_Human/Inbox` | `00_个人知识库/收件箱` | `00_Human_个人知识库/Inbox_收件箱` |
+| `00_Human/MOCs` | `00_个人知识库/知识地图` | `00_Human_个人知识库/MOCs_知识地图` |
+| `00_Human/Projects` | `00_个人知识库/项目` | `00_Human_个人知识库/Projects_项目` |
+| `00_Human/Resources` | `00_个人知识库/知识资源` | `00_Human_个人知识库/Resources_知识资源` |
+| `00_Human/Resources/Concepts` | `00_个人知识库/知识资源/概念笔记` | `00_Human_个人知识库/Resources_知识资源/Concepts_概念笔记` |
+| `00_Human/Resources/Literature` | `00_个人知识库/知识资源/阅读笔记` | `00_Human_个人知识库/Resources_知识资源/Literature_阅读笔记` |
+| `00_Human/Resources/Permanent-Notes` | `00_个人知识库/知识资源/永久笔记` | `00_Human_个人知识库/Resources_知识资源/Permanent-Notes_永久笔记` |
+| `00_Human/Resources/References` | `00_个人知识库/知识资源/参考资料` | `00_Human_个人知识库/Resources_知识资源/References_参考资料` |
+| `00_Human/book` | `00_个人知识库/书籍` | `00_Human_个人知识库/book_书籍` |
+| `00_Human/index.md` | `00_个人知识库/知识导航.md` | `00_Human_个人知识库/index_知识导航.md` |
+| `10_Agent` | `10_AI知识库` | `10_Agent_AI知识库` |
+| `10_Agent/raw` | `10_AI知识库/原始资料` | `10_Agent_AI知识库/raw_原始资料` |
+| `10_Agent/raw/documents` | `10_AI知识库/原始资料/文档` | `10_Agent_AI知识库/raw_原始资料/documents_文档` |
+| `10_Agent/raw/papers` | `10_AI知识库/原始资料/学术论文` | `10_Agent_AI知识库/raw_原始资料/papers_学术论文` |
+| `10_Agent/raw/websites` | `10_AI知识库/原始资料/网页文章` | `10_Agent_AI知识库/raw_原始资料/websites_网页文章` |
+| `10_Agent/wiki` | `10_AI知识库/整理后的知识` | `10_Agent_AI知识库/wiki_整理后的知识` |
+| `10_Agent/wiki/comparisons` | `10_AI知识库/整理后的知识/对比分析` | `10_Agent_AI知识库/wiki_整理后的知识/comparisons_对比分析` |
+| `10_Agent/wiki/concepts` | `10_AI知识库/整理后的知识/概念` | `10_Agent_AI知识库/wiki_整理后的知识/concepts_概念` |
+| `10_Agent/wiki/decisions` | `10_AI知识库/整理后的知识/决策记录` | `10_Agent_AI知识库/wiki_整理后的知识/decisions_决策记录` |
+| `10_Agent/wiki/entities` | `10_AI知识库/整理后的知识/对象` | `10_Agent_AI知识库/wiki_整理后的知识/entities_对象` |
+| `10_Agent/wiki/index.md` | `10_AI知识库/整理后的知识/知识目录.md` | `10_Agent_AI知识库/wiki_整理后的知识/index_知识目录.md` |
+| `10_Agent/wiki/log.md` | `10_AI知识库/整理后的知识/知识更新记录.md` | `10_Agent_AI知识库/wiki_整理后的知识/log_知识更新记录.md` |
+| `10_Agent/wiki/projects` | `10_AI知识库/整理后的知识/项目知识` | `10_Agent_AI知识库/wiki_整理后的知识/projects_项目知识` |
+| `10_Agent/wiki/synthesis` | `10_AI知识库/整理后的知识/综合研究` | `10_Agent_AI知识库/wiki_整理后的知识/synthesis_综合研究` |
+| `10_Agent/wiki/topics` | `10_AI知识库/整理后的知识/专题` | `10_Agent_AI知识库/wiki_整理后的知识/topics_专题` |
+| `20_Exchange` | `20_协作交流` | `20_Exchange_协作交流` |
+| `20_Exchange/agent-to-agent` | `20_协作交流/AI之间的交流` | `20_Exchange_协作交流/agent-to-agent_AI之间的交流` |
+| `20_Exchange/agent-to-agent/locks` | `20_协作交流/AI之间的交流/编辑锁` | `20_Exchange_协作交流/agent-to-agent_AI之间的交流/locks_编辑锁` |
+| `20_Exchange/agent-to-human` | `20_协作交流/AI提供给人的知识` | `20_Exchange_协作交流/agent-to-human_AI提供给人的知识` |
+| `20_Exchange/human-to-agent` | `20_协作交流/人提供给AI的知识` | `20_Exchange_协作交流/human-to-agent_人提供给AI的知识` |
+| `20_Exchange/write-requests` | `20_协作交流/笔记修改提案` | `20_Exchange_协作交流/write-requests_笔记修改提案` |
+| `30_System` | `30_知识库管理` | `30_System_知识库管理` |
+| `30_System/README.md` | `30_知识库管理/使用说明.md` | `30_System_知识库管理/README_使用说明.md` |
+| `30_System/policies` | `30_知识库管理/管理规则` | `30_System_知识库管理/policies_管理规则` |
+| `30_System/policies/ownership-and-permissions.md` | `30_知识库管理/管理规则/归属与权限.md` | `30_System_知识库管理/policies_管理规则/ownership-and-permissions_归属与权限.md` |
+| `30_System/reports` | `30_知识库管理/检查报告` | `30_System_知识库管理/reports_检查报告` |
+| `30_System/schemas` | `30_知识库管理/笔记格式规范` | `30_System_知识库管理/schemas_笔记格式规范` |
+| `30_System/schemas/frontmatter.schema.json` | `30_知识库管理/笔记格式规范/frontmatter.schema.json` | `30_System_知识库管理/schemas_笔记格式规范/frontmatter.schema.json` |
+| `30_System/scripts` | `30_知识库管理/辅助脚本` | `30_System_知识库管理/scripts_辅助脚本` |
+| `30_System/templates` | `30_知识库管理/笔记模板` | `30_System_知识库管理/templates_笔记模板` |
+| `30_System/templates/agent-knowledge.md` | `30_知识库管理/笔记模板/AI知识笔记.md` | `30_System_知识库管理/templates_笔记模板/agent-knowledge_AI知识笔记.md` |
+| `30_System/templates/comparison.md` | `30_知识库管理/笔记模板/对比分析.md` | `30_System_知识库管理/templates_笔记模板/comparison_对比分析.md` |
+| `30_System/templates/concept.md` | `30_知识库管理/笔记模板/概念.md` | `30_System_知识库管理/templates_笔记模板/concept_概念.md` |
+| `30_System/templates/decision.md` | `30_知识库管理/笔记模板/决策记录.md` | `30_System_知识库管理/templates_笔记模板/decision_决策记录.md` |
+| `30_System/templates/entity.md` | `30_知识库管理/笔记模板/对象.md` | `30_System_知识库管理/templates_笔记模板/entity_对象.md` |
+| `30_System/templates/handoff.md` | `30_知识库管理/笔记模板/任务交接.md` | `30_System_知识库管理/templates_笔记模板/handoff_任务交接.md` |
+| `30_System/templates/human-change-proposal.md` | `30_知识库管理/笔记模板/个人笔记修改提案.md` | `30_System_知识库管理/templates_笔记模板/human-change-proposal_个人笔记修改提案.md` |
+| `30_System/templates/human-note.md` | `30_知识库管理/笔记模板/个人笔记.md` | `30_System_知识库管理/templates_笔记模板/human-note_个人笔记.md` |
+| `30_System/templates/project.md` | `30_知识库管理/笔记模板/项目知识.md` | `30_System_知识库管理/templates_笔记模板/project_项目知识.md` |
+| `30_System/templates/source.md` | `30_知识库管理/笔记模板/来源.md` | `30_System_知识库管理/templates_笔记模板/source_来源.md` |
+| `30_System/templates/synthesis.md` | `30_知识库管理/笔记模板/综合研究.md` | `30_System_知识库管理/templates_笔记模板/synthesis_综合研究.md` |
+| `30_System/templates/topic.md` | `30_知识库管理/笔记模板/专题.md` | `30_System_知识库管理/templates_笔记模板/topic_专题.md` |
+| `30_System/workflows` | `30_知识库管理/知识处理流程` | `30_System_知识库管理/workflows_知识处理流程` |
+| `30_System/workflows/knowledge-routing.md` | `30_知识库管理/知识处理流程/知识工作流程.md` | `30_System_知识库管理/workflows_知识处理流程/knowledge-routing_知识工作流程.md` |
+| `90_Archive` | `90_全库归档` | `90_Archive_全库归档` |
+| `AGENTS.md` | `AGENTS.md` | `AGENTS.md` |
+| `README.md` | `使用说明.md` | `README_使用说明.md` |

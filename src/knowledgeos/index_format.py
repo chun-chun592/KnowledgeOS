@@ -36,6 +36,7 @@ def _summary(document: Document, limit: int = 100) -> str:
             break
     quote = re.sub(r"\[\[([^\]|]+)\|([^\]]+)\]\]", r"\2", quote)
     quote = re.sub(r"\[\[([^\]]+)\]\]", r"\1", quote)
+    quote = re.sub(r"!?\[([^\]\n]*)\]\([^()\n]*\)", r"\1", quote)
     quote = re.sub(r"[*_`]", "", quote).replace("|", "\\|")
     return quote[:limit].strip()
 

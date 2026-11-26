@@ -16,3 +16,6 @@ Verify links between the source and affected wiki notes and check file and sourc
 
 按宿主选择 MCP、CLI 或原生工具。真实库沿用获准的原生写入和 Human 提案边界。独立测试根可用 knowledgeos ingest 起草，获准时用 --apply 保存原件与来源页；Strict 专用字段仅适用于已启用的严格合成模式。\
 Choose MCP, CLI, or native tools according to the host. Follow approved native writes and the Human proposal boundary in the real vault. In a separate test root, knowledgeos ingest can draft a Source page, and --apply saves it and the original when authorized. Strict-specific fields apply only in enabled synthetic Strict mode.
+
+从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
+Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.

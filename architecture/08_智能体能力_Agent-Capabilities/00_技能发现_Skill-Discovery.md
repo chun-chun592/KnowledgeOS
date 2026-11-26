@@ -16,3 +16,5 @@ Hosts load SKILL.md through their own discovery rules. Choose by description, th
 
 从[仓库 Skills](../../skills)及[宿主接入](../../adapters/README.md)选择所需工作流；权限由 Vault 规则及实际工具能力确定。\
 Choose workflows from the [repository Skills](../../skills) and [host adapters](../../adapters/README.md). Vault rules and actual tool capabilities determine the available scope.
+
+[目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
