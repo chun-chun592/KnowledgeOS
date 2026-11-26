@@ -18,3 +18,5 @@ Hosts load SKILL.md through their own discovery rules. Choose by description, th
 Choose workflows from the [repository Skills](../../skills) and [host adapters](../../adapters/README.md). Vault rules and actual tool capabilities determine the available scope.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+八个 Skills 发现并使用公共区，在用户任务相关时检索三类知识。/ The same eight Skills discover Shared and select appropriate scopes.

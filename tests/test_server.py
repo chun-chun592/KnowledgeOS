@@ -51,7 +51,7 @@ def test_scoped_tool_protocol(fixture):
             async with ClientSession(reader, writer) as client:
                 await client.initialize()
                 tools = {tool.name: tool for tool in (await client.list_tools()).tools}
-                assert len(tools) == 9 and "propose_human_update" in tools
+                assert len(tools) == 10 and {"propose_human_update", "propose_shared_update"} <= tools.keys()
                 assert all(tool.annotations.readOnlyHint for tool in tools.values())
                 assert "query" in tools["search_knowledge"].inputSchema["required"]
 

@@ -72,3 +72,5 @@ Inference: Choose **…** when **…**; choose **…** when **…**.
 ## Sources
 
 -
+
+For Shared use, set owner to shared and use the corresponding Shared type directory. Place Shared Source records in its sources directory.

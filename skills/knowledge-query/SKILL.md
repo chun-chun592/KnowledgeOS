@@ -1,18 +1,17 @@
 ---
 name: knowledge-query
-description: Search approved KnowledgeOS scopes, read notes, inspect properties and tags, and trace relationships before synthesis.
+description: Search scoped KnowledgeOS notes, properties, tags and links.
 ---
 
-# 查询知识 / Knowledge Query
+# knowledge-query
 
-先检查获准的导航、标题及别名，以精确词和同义词检索。按需扩大到正文、来源及反向引用。\
-Start with authorized indexes, titles, and aliases. Search exact terms and synonyms, then broaden to bodies, sources, and backlinks as needed.
+Search Agent and Shared, then explicitly opened Human scopes. Select the MCP subject shared when needed.
 
-MCP 可用时，可选择 search_knowledge、read_markdown、note_metadata、query_tags、knowledge_links。无 MCP 时，以 CLI query／inspect 或获准的原生搜索和读取完成等效检查；原生工具可直接核对 frontmatter、SHA-256 和链接。\
-When MCP is available, choose search_knowledge, read_markdown, note_metadata, query_tags, or knowledge_links as appropriate. Otherwise use CLI query or inspect, or scoped native search and reading. Native tools can check frontmatter, SHA-256, and links directly.
+先读目标库 AGENTS.md 和归属规则。按知识任务发现并组合所需 Skills。使用宿主已配置的根路径，遵循 en-US、zh-CN 或 zh-en 的实际相对路径。按需选用 MCP、CLI 或原生文件工具。
+Read the vault entry and ownership rules. Use the configured vault root, actual localized paths, and available tools. No tool is mandatory.
 
-跨主体检索时分别查看获准的 Human 和 Agent 范围；工具支持主体筛选时再使用该参数。标识主体、相对路径、覆盖范围和缺口。空结果仅代表已搜索范围。\
-Search authorized Human and Agent scopes separately for cross-subject questions and use a subject parameter where supported. Report subject, relative path, coverage, and gaps. Empty results apply only to the scope searched.
+Agent 私有知识按所属范围自主维护。公共知识只自主新建及追加该条目的索引、日志。已有公共知识与 Human 私有变更需当前可信交互中的具体批准。核对范围、操作、原始哈希或不存在状态、准确内容及冲突；用原生工具获准执行。无法确认或执行时交付完整手工提案。
+Maintain assigned Agent knowledge autonomously. Shared creation may append its index and log entries. Changes to existing Shared or Human private knowledge require exact approval from the current trusted interaction. Check scope, operation, base hash or absence, exact content and conflicts; use permitted native tools. Fall back to a full manual proposal when confirmation or execution is unavailable.
 
-从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
-Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.
+保留可追溯来源、写前备份及租约，写后重读并记日志。用自动反链。读取私有资料的许可与共享许可分别核对。真实库 MCP 和 CLI 保持只读。独立测试根可用现有 Native 命令，Strict Mode 保持可选。
+Preserve traceable sources, leases and backups. Verify writes and append audit events. Use computed backlinks. Check private read and sharing grants independently. Real-vault MCP and CLI are read-only. Native test-root tools and optional Strict Mode stay separate.

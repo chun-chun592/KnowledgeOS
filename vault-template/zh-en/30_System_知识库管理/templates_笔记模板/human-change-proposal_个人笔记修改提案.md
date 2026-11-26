@@ -1,21 +1,12 @@
-# Human Note Change Proposal
-
-- Target relative path
-- Base SHA-256
-- Rationale and original context
-- Complete proposed Markdown
-- Unified diff
-- Sources and related knowledge
-
-The Human reviews and applies the proposal in any editor. Creating a proposal leaves the target file untouched.
-
-# Human 知识变更提案
-
-- 目标相对路径
-- 基础 SHA-256
-- 修改理由及原文上下文
-- 完整建议 Markdown
-- 统一 diff
-- 来源与相关知识引用
-
-由 Human 使用任意编辑器审核及应用。提案本身不写入目标文件。
+# 受保护知识变更申请
+# Protected knowledge change proposal
+- Request ID / 申请 ID
+- Region and owner / 区域及归属
+- Operation / 操作
+- Source and destination paths / 源路径及目标路径
+- Base SHA-256 or expected absence for each path / 各路径基础哈希或预期不存在
+- Reason / 理由
+- Exact Markdown and diff, or exact deletion and move scope / 完整修改及差异，或准确的删除及移动范围
+- Impact and recovery / 影响及恢复
+- Approved item IDs from the current interaction / 当前交互明确批准的条目
+- Verification and operation record after execution / 执行后核验和操作记录

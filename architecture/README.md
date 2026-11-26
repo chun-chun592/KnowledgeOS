@@ -26,5 +26,9 @@ Markdown Native is the daily workflow. Obsidian is optional. Hosts choose Skills
 | 13 | [安装与接入 / Deployment](13_安装与接入_Deployment/00_安装与宿主_Setup-and-Hosts.md) |
 | 14 | [架构决策 / Architecture Decisions](14_架构决策_Architecture-Decisions/00_架构决策登记_Architecture-Decision-Register.md) |
 
-严格模式是单独配置的合成能力，不是日常依赖。Human 自动写入和 Publisher 保持关闭。\
-Strict mode is a separately configured synthetic capability and is optional for daily use. Automatic Human writes and Publisher remain disabled.
+严格模式是单独配置的合成能力，不是日常依赖。真实库工具直接写入和 Publisher 保持关闭。\
+Strict mode is a separately configured synthetic capability and is optional for daily use. Tool-driven real-vault writes and Publisher remain disabled.
+
+Human 与 Agent 共同维护独立公共区。规则与执行见[主体协作与提案](05_知识协作_Knowledge-Collaboration/00_主体协作与提案_Ownership-and-Proposals.md)。
+
+Human and Agent collaborate in a third, independent Shared region.

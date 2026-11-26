@@ -38,7 +38,8 @@
       "type": "string",
       "enum": [
         "agent",
-        "human"
+        "human",
+        "shared"
       ]
     },
     "created_by": {

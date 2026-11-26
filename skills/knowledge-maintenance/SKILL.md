@@ -1,24 +1,17 @@
 ---
 name: knowledge-maintenance
-description: Maintain Agent links, indexes, logs and approved recovery within the configured KnowledgeOS mode.
+description: Maintain scoped KnowledgeOS relationships, indexes, logs and recovery.
 ---
 
-# 知识维护 / Knowledge Maintenance
+# knowledge-maintenance
 
-根据宿主选择 MCP、CLI 或原生工具做只读链接、引用和元数据检查。区分范围外不可见和已确认失效，Human 修复只交付提案。\
-Select MCP, CLI, or native tools for read-only checks of links, references, and metadata. Distinguish out-of-scope targets from confirmed breakage. Human repairs remain proposals.
+Preserve original evidence and prefer recoverable archives. Reuse the existing leases and recovery tools.
 
-真实库按现有协议使用租约、哈希及备份，定点修改 Agent 索引或日志。遵循现有归档规则，真实库不使用测试根删除、恢复或全量同步工具。\
-Follow real-vault leases, hashes, backups and targeted Agent index or log edits. Follow the vault archive policy. Real-vault maintenance does not use test-root delete, restore, or full sync tools.
+先读目标库 AGENTS.md 和归属规则。按知识任务发现并组合所需 Skills。使用宿主已配置的根路径，遵循 en-US、zh-CN 或 zh-en 的实际相对路径。按需选用 MCP、CLI 或原生文件工具。
+Read the vault entry and ownership rules. Use the configured vault root, actual localized paths, and available tools. No tool is mandatory.
 
-独立 Native 测试根可以使用 native_note_change 或 knowledgeos restore 按备份哈希恢复，用 sync_native_wiki 或 knowledgeos sync 发现外部改动并重建托管区块。\
-In a separate Native test root, use native_note_change or knowledgeos restore with a backup hash. Use sync_native_wiki or knowledgeos sync to observe external changes and rebuild managed blocks.
+Agent 私有知识按所属范围自主维护。公共知识只自主新建及追加该条目的索引、日志。已有公共知识与 Human 私有变更需当前可信交互中的具体批准。核对范围、操作、原始哈希或不存在状态、准确内容及冲突；用原生工具获准执行。无法确认或执行时交付完整手工提案。
+Maintain assigned Agent knowledge autonomously. Shared creation may append its index and log entries. Changes to existing Shared or Human private knowledge require exact approval from the current trusted interaction. Check scope, operation, base hash or absence, exact content and conflicts; use permitted native tools. Fall back to a full manual proposal when confirmation or execution is unavailable.
 
-可选严格模式独立使用 knowledge_audit、文件身份及事务键，派生文件待修复时用 sync_agent_wiki 或 Broker CLI 的 sync_wiki。\
-Optional Strict mode uses knowledge_audit, file identity, and transaction keys. For pending projections, use sync_agent_wiki or the Broker CLI sync_wiki operation.
-
-真实库定点核对索引、日志、反向引用及受影响备份，避免覆盖既有分组和统计。仅在独立测试根调用适用的 Native 同步工具；协作租约按当前库规则处理。\
-In the real vault, check the affected index entries, log, backlinks, and backups while preserving established groups and statistics. Use applicable Native sync tools only in an independent test root and follow the current vault lease rules.
-
-从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
-Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.
+保留可追溯来源、写前备份及租约，写后重读并记日志。用自动反链。读取私有资料的许可与共享许可分别核对。真实库 MCP 和 CLI 保持只读。独立测试根可用现有 Native 命令，Strict Mode 保持可选。
+Preserve traceable sources, leases and backups. Verify writes and append audit events. Use computed backlinks. Check private read and sharing grants independently. Real-vault MCP and CLI are read-only. Native test-root tools and optional Strict Mode stay separate.

@@ -10,3 +10,5 @@ Concept explains an idea, Entity describes a subject, Topic organizes an area, C
 Intake and synthesis check for overlap before drafting and prefer the existing page. Separate findings, inferences, and opinions. Preserve contradictory evidence with its scope, mark stale material outdated and uncertain material needs-review. Each page should be reusable through source and related links.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+Agent 私有知识维护由所属范围长期授权。保留原件，普通删除优先可恢复归档。/ Agent private maintenance is autonomous within the assigned scope. Retain original evidence and prefer recoverable archive.

@@ -4,7 +4,7 @@
 
 KnowledgeOS 帮助你和 Agent 把已有笔记与来源材料整理成可复用的知识。它使用同一个 Markdown 文件夹。你可以用任意编辑器或文件管理器打开笔记，Obsidian 可按需使用。
 
-当前发行版本为 **v0.1.4**，请从该版本的检出目录安装。现有英文库继续用原路径；新库可复制一套完整的[语言模板](vault-template/README.zh-CN.md)。
+当前发行版本为 **v0.1.5**，请从该版本的检出目录安装。现有英文库继续用原路径；新库可复制一套完整的[语言模板](vault-template/README.zh-CN.md)。
 
 ## 系统架构
 
@@ -17,7 +17,7 @@ KnowledgeOS 帮助你和 Agent 把已有笔记与来源材料整理成可复用�
 - 维护 Agent 索引和操作日志，使用哈希检查冲突、从备份恢复旧内容。
 - 为 Human 笔记生成完整 Markdown、统一 diff 和基础 SHA-256。
 
-Markdown 是知识的唯一事实来源。Human 和 Agent 是逻辑知识主体。Human 直接编辑自己的笔记；Agent 读取明确开放的 Human 范围，并在获准的 Agent 范围内写入。Human 提案由本人核对基础哈希后手工应用。
+Markdown 是知识的唯一事实来源。Human 和 Agent 是逻辑知识主体。Human 直接编辑自己的笔记；Agent 读取明确开放的 Human 范围，并在获准的 Agent 范围内写入。Human 私有及已有公共变更先绑定具体批准，再重新核对基础哈希后原生执行。
 
 ## 接入现有知识文件夹
 
@@ -68,3 +68,7 @@ knowledgeos-mcp --vault <vault-root>
 ## 项目与来源
 
 KnowledgeOS 0.1.4 整合了 Agent Kit 0.1.1 的 Core 源码，保留上游 MIT 声明。[许可证](LICENSE) · [变更记录](CHANGELOG.md)
+
+## 公共知识与批准执行
+
+Agent 私有维护及公共新建可自主完成。Human 私有及已有公共内容按当前交互中的具体批准进行原生编辑。真实库 MCP 和 CLI 保持只读。详见[主体协作与提案](architecture/05_知识协作_Knowledge-Collaboration/00_主体协作与提案_Ownership-and-Proposals.md)。

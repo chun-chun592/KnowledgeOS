@@ -10,7 +10,8 @@ flowchart TD
     Task["Natural-language task"] --> Host["Agent Host · selects Skills and tools"]
     Host --> Read["Scoped reads · MCP, CLI or files"]
     Read --> H
-    Read --> W["10_Agent/wiki · compiled knowledge"]
+    Read --> W["10_Agent/wiki · Agent private"]
+    Read --> S["15_Shared · joint knowledge"]
     Raw["10_Agent/raw · retained evidence"] --> W
     Host --> Proposal["Human proposal · Markdown, diff, base hash"]
     Proposal --> Human
@@ -24,3 +25,5 @@ flowchart TD
 
 现实知识正文始终位于 Markdown。可选严格模式的 SQLite 账本记录事务与审计，Native 观察事件不等于严格提交。\
 Real knowledge content remains in Markdown. The optional Strict SQLite ledger records transactions and audits. Native observation events are distinct from Strict commits.
+
+Shared may cite an authorized retained original by reference. The source and target permissions apply independently.

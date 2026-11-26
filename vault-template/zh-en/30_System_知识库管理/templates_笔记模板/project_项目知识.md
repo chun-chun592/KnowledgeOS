@@ -73,3 +73,6 @@ Use for projects whose knowledge outlives the task. Personal task tracking belon
 ## 中文填写说明
 
 填写适用章节，链接实际证据并标注不确定性。删除不适用的占位内容。
+
+用于公共区时填写 owner: shared，并放入公共区相应类型目录。公共来源记录放在公共区来源目录。
+For Shared use, set owner to shared and use the corresponding Shared type directory. Place Shared Source records in its sources directory.

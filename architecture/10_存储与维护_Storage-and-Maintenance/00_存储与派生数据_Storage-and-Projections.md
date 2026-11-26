@@ -24,3 +24,5 @@ The Strict ledger uniquely associates the authenticated principal and idempotenc
 Strict projection replacement and SQLite commit are separate operations. Direct readers may see a complete new file before the ledger confirms it, so verify Strict business outcomes against the ledger.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+公共区维护独立索引和日志。公共新增可追加对应索引条目和日志，并维护可重建统计。/ Shared has independent index and log projections.

@@ -16,3 +16,7 @@ Daily Markdown Native uses any editor, host Skills, read-only MCP or CLI, and ap
 
 [系统架构](01_组件与数据流_Components-and-Data-Flow.md)说明组件和数据流，[知识架构](../02_知识架构_Knowledge-Architecture/00_知识目录_Knowledge-Layout.md)说明目录及字段。\
 See [system architecture](01_组件与数据流_Components-and-Data-Flow.md) for components and data flow, and [knowledge architecture](../02_知识架构_Knowledge-Architecture/00_知识目录_Knowledge-Layout.md) for directories and fields.
+
+两个知识主体、三个知识区域。Human 管理私有与公共知识，Agent 按授权范围维护自己的知识，并直接向公共区提交新增内容。
+
+Two actors use three regions. Agents maintain their assigned knowledge and contribute new Shared knowledge.

@@ -4,7 +4,7 @@
 
 KnowledgeOS helps you and your agents turn existing notes and source material into reusable knowledge. It works with a shared Markdown folder. Open the notes in any editor or file manager. Obsidian is optional and can stay closed.
 
-The current release is **v0.1.4**. Install from the v0.1.4 checkout. Existing English vaults keep their paths. For new vaults, copy one complete [language template](vault-template/README.md).
+The current release is **v0.1.5**. Install from the v0.1.5 checkout. Existing English vaults keep their paths. For new vaults, copy one complete [language template](vault-template/README.md).
 
 ## Architecture
 
@@ -17,7 +17,7 @@ The [formal architecture](architecture/README.md) documents the existing Markdow
 - Maintain the Agent index and activity log. Use hashes and backups to check conflicts and recover older content.
 - Ask for a Human note change proposal with complete Markdown, a unified diff and the original SHA-256.
 
-Markdown is the source of truth. Human and Agent are logical knowledge owners. Humans edit their own notes directly. Agents read explicitly opened Human scopes and write in approved Agent scopes. Apply Human proposals manually after checking the base hash.
+Markdown is the source of truth. Human and Agent are logical knowledge owners. Humans edit their own notes directly. Agents read Agent and Shared knowledge and explicitly opened Human scopes. After exact current approval, use a permitted native editor. Use manual proposals when the host cannot confirm or execute approval.
 
 ## Start with an existing knowledge folder
 
@@ -51,7 +51,7 @@ Try “Find our existing notes on this topic and show what overlaps,” “Integ
 
 ## Daily writes and limits
 
-**Markdown Native is the recommended daily workflow.** The real vault currently uses authorized native file edits in the Agent wiki. Follow the vault's lease, backup, SHA-256, index and log rules. MCP and CLI direct writes to the real vault are unavailable. Native edits and filesystem observations do not produce Strict Writer SQLite commits. These boundaries are application rules.
+**Markdown Native is the recommended daily workflow.** The real vault currently uses authorized native file edits under the region permission matrix. Follow the vault's lease, backup, SHA-256, index and log rules. MCP and CLI direct writes to the real vault are unavailable. Native edits and filesystem observations do not produce Strict Writer SQLite commits. These boundaries are application rules.
 
 For a **separate approved test root**, set `KNOWLEDGEOS_PROTECTED_VAULT` to your protected vault path, then use `python markdown_native.py --vault <test-root> sync` or start the MCP server with `--native-write`. Test-root create, update, delete and restore use scoped file rules. External edits are detected by a later sync and can race with other editors.
 
@@ -68,3 +68,7 @@ Strict mode uses separate Windows principals, Broker, Secure Writer and SQLite. 
 ## Project and attribution
 
 KnowledgeOS 0.1.4 integrates Core source from Agent Kit 0.1.1. The upstream MIT notice is retained. [License](LICENSE) · [Changes](CHANGELOG.md)
+
+## Shared knowledge and approved changes
+
+Agent private edits and additive Shared contributions are autonomous. Existing Shared and Human private changes require exact Human approval and are applied with permitted native editors. The real-vault MCP and CLI stay read-only. See [ownership and proposals](architecture/05_知识协作_Knowledge-Collaboration/00_主体协作与提案_Ownership-and-Proposals.md).

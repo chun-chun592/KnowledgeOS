@@ -15,6 +15,7 @@ from uuid import uuid4
 
 from server import MAX_BYTES, Wiki, checked_handle, is_link, safe_name
 from knowledgeos.index_format import render_block
+from knowledgeos.schema import load_schema, parse_text, validate_document
 from mcp.server.fastmcp.exceptions import ToolError
 
 
@@ -76,7 +77,7 @@ class NativeWiki:
             raise ValueError("Native writes require a separate approved local root")
 
     @contextmanager
-    def locked(self, *notes):
+    def locked(self, *notes, shared=False):
         if self.base.resolve(strict=True) != self.base:
             raise ValueError("unsafe wiki directory")
         self.state.mkdir(exist_ok=True)
@@ -91,7 +92,8 @@ class NativeWiki:
                     if folder.resolve(strict=True) != folder or is_link(folder) or not folder.is_dir():
                         raise ValueError("unsafe shared lease directory")
                     now = datetime.now(timezone.utc)
-                    for relative in sorted(set(notes) | {self.index.as_posix(), self.log.as_posix()}):
+                    metadata = ("15_Shared/index.md", "15_Shared/log.md") if shared else ("10_Agent/wiki/index.md", "10_Agent/wiki/log.md")
+                    for relative in sorted(set(notes) | {self.layout.path(name).as_posix() for name in metadata}):
                         path = folder / (relative.replace("/", "-").replace(".", "-") + ".lock.md")
                         payload = ("---\nlock: true\npath: " + json.dumps(relative) + "\nowner: knowledgeos-native\n"
                                    f"acquired: {now.isoformat()}\nexpires: {(now + timedelta(minutes=15)).isoformat()}\n"
@@ -197,7 +199,46 @@ class NativeWiki:
         with self.locked():
             return self.sync_locked()
 
+    def create_shared(self, path, markdown):
+        rel = PurePosixPath(path)
+        target = self.root / rel
+        if (not safe_name(path) or self.layout.shared not in rel.parents
+                or len(rel.parts) != 3 or rel.suffix != ".md"
+                or rel.name.casefold() in self.layout.meta or target.parent.resolve(strict=True) != target.parent):
+            raise ValueError("PATH_DENIED: expected a Shared Markdown knowledge path")
+        if not markdown or len(markdown.encode()) > MAX_BYTES:
+            raise ValueError("Expected Markdown within the scoped read limit")
+        doc = parse_text(markdown, target, path)
+        issues = validate_document(doc, schema=load_schema(self.root, layout=self.layout), layout=self.layout)
+        if any(issue.level == "error" for issue in issues):
+            raise ValueError("; ".join(str(issue) for issue in issues if issue.level == "error"))
+        data = markdown.encode()
+        event = self.event(path, None, digest(data), "native_local", "create")
+        index = self.root / self.layout.path("15_Shared/index.md")
+        log = self.root / self.layout.path("15_Shared/log.md")
+        with self.locked(path, shared=True):
+            if read_file(target) is not None:
+                raise ValueError("CONFLICT: destination already exists")
+            previous_index, previous_log = read_file(index), read_file(log)
+            if previous_index is None or previous_log is None:
+                raise ValueError("Shared index and log must already exist")
+            index_entry = f"\n- [[{path.removesuffix('.md')}]]\n".encode()
+            log_entry = ("\n    " + json.dumps(event, ensure_ascii=False) + "\n").encode()
+            for previous in (previous_index, previous_log):
+                self.backup(previous)
+            publish(target, data, None)
+            try:
+                publish(index, previous_index + index_entry, previous_index)
+                publish(log, previous_log + log_entry, previous_log)
+            except (OSError, ValueError, ToolError):
+                return {"code": "NATIVE_SYNC_PENDING", "event": event}
+        return {"code": "NATIVE_APPLIED", "event": event}
+
     def change(self, operation, path, expected_sha256=None, markdown=None, backup_sha256=None):
+        if self.layout.shared in PurePosixPath(path).parents:
+            if operation != "create" or expected_sha256 is not None or backup_sha256 is not None:
+                raise ValueError("SHARED_WRITE_AUTHORIZATION_REQUIRED: use a confirmed native proposal")
+            return self.create_shared(path, markdown)
         if operation not in {"create", "update", "delete", "restore"}:
             raise ValueError("unknown local operation")
         target = self.target(path)

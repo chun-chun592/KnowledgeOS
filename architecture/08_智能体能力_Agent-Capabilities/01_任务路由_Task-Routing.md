@@ -16,3 +16,5 @@ Distinguish reads, proposed or actual Agent changes, and Human proposals before 
 
 严格模式的可信配置固定根、角色、管道和许可；Broker 认证请求并通过独立受保护管道交给 Writer。普通 Agent 无权把请求声明当成服务身份。\
 Trusted Strict configuration binds the root, roles, pipes, and permissions. The Broker authenticates requests and hands them to the Writer over a separate protected pipe. Agent-supplied identity claims carry no service authority.
+
+自主维护 Agent 私有知识和新增公共知识。受保护变更遵循具体批准。/ Maintain Agent private and add Shared knowledge autonomously. Protected changes require exact approval.

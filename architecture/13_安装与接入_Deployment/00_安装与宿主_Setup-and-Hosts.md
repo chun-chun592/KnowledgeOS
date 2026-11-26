@@ -18,3 +18,5 @@ CLI and native file tools work independently. For MCP, use knowledgeos-mcp --vau
 Native test writes require a separate root and preserve protected-root checks. Strict mode separately requires optional dependencies, existing synthetic configuration, distinct principals, and protected IPC. Historical Windows deployment research does not apply to daily installation.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+v0.1.5 同时同步八个 Skills、三语模板与只读运行包。无需 Obsidian 或后台服务。

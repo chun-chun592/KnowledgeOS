@@ -4,8 +4,8 @@
 
 ## 日常知识流转 / Daily Knowledge Flow
 
-检索与查重 → 核对来源 → 草稿或变更计划 → 核对主体与权限 → 更新原页或必要时新增 → 重读正文与链接 → 同步受影响的索引和日志。Human 目标止于可审查提案。\
-Search and deduplicate → verify sources → draft or plan → check owner and scope → update or create when needed → reread content and links → sync the affected index and log. Human targets stop at a reviewable proposal.
+检索与查重 → 核对来源 → 草稿或变更计划 → 核对主体与权限 → 更新原页或必要时新增 → 重读正文与链接 → 同步受影响的索引和日志。Human 私有与已有公共知识变更先提交可审查提案，获具体批准后按原生协议执行。\
+Search and deduplicate → verify sources → draft or plan → check owner and scope → update or create when needed → reread content and links → sync the affected index and log. Human and existing Shared changes require a reviewable proposal and exact approval before native execution.
 
 ## Native 状态 / Native States
 
@@ -21,3 +21,5 @@ PREPARED 包含旧内容、暂存、目标和父目录证据；仅状态为 PREP
 PREPARED records old content, staging, target, and parent evidence. The PREPARED state alone cannot prove whether replacement occurred. Preserve missing paths, unknown identities, matching hashes with different identities, or conflicting evidence for review without overwriting or retrying.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+先查重和核对共享许可，再决定新增公共知识。索引追加条目，日志记录事件；已有公共页的反链由检索动态计算。

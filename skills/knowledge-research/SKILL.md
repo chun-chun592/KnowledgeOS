@@ -1,18 +1,17 @@
 ---
 name: knowledge-research
-description: Research a KnowledgeOS topic, verify source evidence, and return a temporary answer or retain reusable findings within the approved scope.
+description: Verify evidence and retain reusable KnowledgeOS findings.
 ---
 
-# 知识研究 / Knowledge Research
+# knowledge-research
 
-先检索已有知识，再按需核验原始来源。比较证据，区分事实、推断、冲突和缺口，并标明相对路径或外部出处。\
-Search existing knowledge first, then verify primary sources as needed. Compare evidence, distinguish facts, inferences, conflicts, and gaps, and cite relative paths or external sources.
+Research within approved sources. Retain durable evidence autonomously where permitted; answer ephemeral questions without saving them.
 
-临时问答或研究直接返回结论。对于自主学习、知识积累或维护，判断成果是否值得复用；在现有授权内选择 knowledge-ingest、knowledge-update 或其他适用 Skill 保存。无需逐次重新批准；不自动保存对话。\
-Return findings directly for temporary questions or research. For autonomous learning, knowledge accumulation, or maintenance, assess reuse value and retain findings through knowledge-ingest, knowledge-update, or another applicable Skill within existing authorization. No fresh approval is needed within that scope. Do not save conversations automatically.
+先读目标库 AGENTS.md 和归属规则。按知识任务发现并组合所需 Skills。使用宿主已配置的根路径，遵循 en-US、zh-CN 或 zh-en 的实际相对路径。按需选用 MCP、CLI 或原生文件工具。
+Read the vault entry and ownership rules. Use the configured vault root, actual localized paths, and available tools. No tool is mandatory.
 
-根据宿主和授权范围选择 MCP、CLI 或原生工具。Human 知识修改只交付提案。\
-Choose MCP, CLI, or native tools according to the host and approved scope. Deliver changes to Human notes as proposals only.
+Agent 私有知识按所属范围自主维护。公共知识只自主新建及追加该条目的索引、日志。已有公共知识与 Human 私有变更需当前可信交互中的具体批准。核对范围、操作、原始哈希或不存在状态、准确内容及冲突；用原生工具获准执行。无法确认或执行时交付完整手工提案。
+Maintain assigned Agent knowledge autonomously. Shared creation may append its index and log entries. Changes to existing Shared or Human private knowledge require exact approval from the current trusted interaction. Check scope, operation, base hash or absence, exact content and conflicts; use permitted native tools. Fall back to a full manual proposal when confirmation or execution is unavailable.
 
-从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
-Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.
+保留可追溯来源、写前备份及租约，写后重读并记日志。用自动反链。读取私有资料的许可与共享许可分别核对。真实库 MCP 和 CLI 保持只读。独立测试根可用现有 Native 命令，Strict Mode 保持可选。
+Preserve traceable sources, leases and backups. Verify writes and append audit events. Use computed backlinks. Check private read and sharing grants independently. Real-vault MCP and CLI are read-only. Native test-root tools and optional Strict Mode stay separate.

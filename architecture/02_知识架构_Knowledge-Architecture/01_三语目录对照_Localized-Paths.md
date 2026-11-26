@@ -69,3 +69,19 @@ The directory language does not constrain note text. Region markers identify the
 | `90_Archive` | `90_全库归档` | `90_Archive_全库归档` |
 | `AGENTS.md` | `AGENTS.md` | `AGENTS.md` |
 | `README.md` | `使用说明.md` | `README_使用说明.md` |
+
+## Shared 公共区
+
+| en-US | zh-CN | zh-en |
+| --- | --- | --- |
+| `15_Shared` | `15_公共知识库` | `15_Shared_公共知识库` |
+| `15_Shared/concepts` | `15_公共知识库/概念` | `15_Shared_公共知识库/concepts_概念` |
+| `15_Shared/entities` | `15_公共知识库/对象` | `15_Shared_公共知识库/entities_对象` |
+| `15_Shared/topics` | `15_公共知识库/专题` | `15_Shared_公共知识库/topics_专题` |
+| `15_Shared/comparisons` | `15_公共知识库/对比分析` | `15_Shared_公共知识库/comparisons_对比分析` |
+| `15_Shared/synthesis` | `15_公共知识库/综合研究` | `15_Shared_公共知识库/synthesis_综合研究` |
+| `15_Shared/projects` | `15_公共知识库/项目知识` | `15_Shared_公共知识库/projects_项目知识` |
+| `15_Shared/decisions` | `15_公共知识库/决策记录` | `15_Shared_公共知识库/decisions_决策记录` |
+| `15_Shared/sources` | `15_公共知识库/来源记录` | `15_Shared_公共知识库/sources_来源记录` |
+| `15_Shared/index.md` | `15_公共知识库/知识目录.md` | `15_Shared_公共知识库/index_知识目录.md` |
+| `15_Shared/log.md` | `15_公共知识库/知识更新记录.md` | `15_Shared_公共知识库/log_知识更新记录.md` |

@@ -10,3 +10,5 @@ Sources can be originals, stable URLs, or vault-relative paths. Prefer resolvabl
 Templates provide structure. Validation also checks provenance, separates facts from inference, and reviews duplication, broken links, and stale status. Human notes may use different fields.
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+Shared 知识使用 owner: shared，沿用知识类型。公共 Source 放 sources；保留 Human 和 Agent 的已有字段。/ Shared uses owner: shared and the same types, with Source under sources.

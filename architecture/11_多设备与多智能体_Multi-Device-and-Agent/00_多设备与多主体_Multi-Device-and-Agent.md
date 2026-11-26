@@ -16,3 +16,5 @@ For external sync, the Human sets scope and conflict policy and avoids concurren
 
 历史 Writer 同步要求只适用于明确选择的严格投影契约，不约束日常外部 Markdown 同步。\
 The historical Writer synchronization requirement only applies to the explicitly selected Strict projection contract.
+
+共享区域已有内容的变更需要批准。新增索引及日志仍使用现有租约。/ Existing Shared edits require approval; lease Shared index and log when adding.

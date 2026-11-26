@@ -17,14 +17,14 @@ from server import Wiki, make_server
 from . import __version__
 from .errors import ValidationError
 from .layout import LOCALES, Layout
-from .schema import render_frontmatter
+from .schema import TYPE_DIRS, render_frontmatter
 from .sections import _append_section
 
 
 RAW = Path("10_Agent/raw/documents")
 WIKI = Path("10_Agent/wiki")
 READ_TOOLS = ("search_knowledge", "read_markdown", "note_metadata", "query_tags",
-              "knowledge_links", "lint_knowledge", "propose_human_update")
+              "knowledge_links", "lint_knowledge", "propose_human_update", "propose_shared_update", "check_change", "write_capability")
 
 
 def initialize(root, locale="en-US"):
@@ -32,8 +32,12 @@ def initialize(root, locale="en-US"):
         raise ValueError("init requires an empty canonical test root outside the protected vault")
     folders = (*(WIKI / name for name in ("concepts", "entities", "topics", "comparisons", "synthesis", "projects", "decisions")),
                RAW, Path("00_Human/Resources"), Path("20_Exchange/agent-to-agent/locks"), Path("30_System"), Path("90_Archive"))
+    folders += tuple(Path("15_Shared") / kind for kind in (*TYPE_DIRS.values(), "sources"))
     for folder in folders:
         (root / Layout(locale).path(folder.as_posix())).mkdir(parents=True, exist_ok=True)
+    for name in ("index", "log"):
+        path = root / Layout(locale).path(f"15_Shared/{name}.md")
+        path.write_text(f"# Shared knowledge {name}\n", encoding="utf-8")
     return {"code": "TEST_ROOT_INITIALIZED"}
 
 
@@ -147,7 +151,7 @@ def run(args):
     wiki = Wiki(root, tuple(args.human_read or config.get("human_read", ())))
     if op == "doctor":
         notes, skipped, _ = wiki.snapshot()
-        return {"code": "READ_READY", "notes": len(notes), "skipped": skipped, "locale": wiki.layout.locale, "scopes": list(map(str, wiki.scopes))}
+        return {"code": "READ_READY", "real_vault_tool_writes": False, "notes": len(notes), "skipped": skipped, "locale": wiki.layout.locale, "scopes": list(map(str, wiki.scopes))}
     if op in {"query", "inspect"}:
         name, request = ("search_knowledge", {"query": args.query}) if op == "query" else (args.tool, json.load(sys.stdin))
         tool = make_server(wiki)._tool_manager.get_tool(name)

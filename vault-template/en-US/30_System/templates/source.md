@@ -74,3 +74,5 @@ In an authorized test root, knowledgeos ingest --apply stores the original under
 ## Open questions
 
 -
+
+For Shared use, set owner to shared and use the corresponding Shared type directory. Place Shared Source records in its sources directory.

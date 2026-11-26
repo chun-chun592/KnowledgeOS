@@ -1,27 +1,17 @@
 ---
 name: knowledge-update
-description: Update an Agent note or prepare a manually applied Human proposal.
+description: Update Agent knowledge, add Shared knowledge, or execute an exact approved protected change.
 ---
 
-# 知识更新 / Knowledge Update
+# knowledge-update
 
-在获准范围内读取现有笔记、基线 SHA-256 和相关来源。用宿主可用的 MCP、CLI 或原生文件工具查重，保留出处、有效历史和原创建者。\
-Read the note, base SHA-256, and relevant sources within approved scopes. Check overlap using the available MCP, CLI, or native tools. Preserve sources, useful history, and original authorship.
+Preserve authorship, citations, prior conclusions and meaningful contribution history. Verify any changes against the current SHA-256.
 
-Human 目标只生成提案。可用 propose_human_update，也可用本地工具从同一基线生成完整 Markdown 和统一 diff。附目标、基础哈希、修改理由和来源，由 Human 用任意编辑器应用。\
-For Human targets, prepare a proposal using propose_human_update or local tools against the same base. Include complete Markdown, a unified diff, the target, base hash, rationale, and sources. The Human applies it with any editor.
+先读目标库 AGENTS.md 和归属规则。按知识任务发现并组合所需 Skills。使用宿主已配置的根路径，遵循 en-US、zh-CN 或 zh-en 的实际相对路径。按需选用 MCP、CLI 或原生文件工具。
+Read the vault entry and ownership rules. Use the configured vault root, actual localized paths, and available tools. No tool is mandatory.
 
-真实 Agent Wiki 按库内协议原生编辑：锁定共享文件，备份基线，写前复核 SHA-256，写后重读并定点更新索引及追加日志。真实库不调用 MCP／CLI 写入或测试根全量同步。\
-For real Agent wiki edits, follow local rules: acquire shared leases, back up and recheck the base, reread the result, update relevant index entries, and append the log. Real-vault edits do not use MCP or CLI write tools or test-root full sync.
+Agent 私有知识按所属范围自主维护。公共知识只自主新建及追加该条目的索引、日志。已有公共知识与 Human 私有变更需当前可信交互中的具体批准。核对范围、操作、原始哈希或不存在状态、准确内容及冲突；用原生工具获准执行。无法确认或执行时交付完整手工提案。
+Maintain assigned Agent knowledge autonomously. Shared creation may append its index and log entries. Changes to existing Shared or Human private knowledge require exact approval from the current trusted interaction. Check scope, operation, base hash or absence, exact content and conflicts; use permitted native tools. Fall back to a full manual proposal when confirmation or execution is unavailable.
 
-独立 Native 测试根可用 native_note_change 或 knowledgeos update／append-section。使用内容哈希核验变更，NATIVE_SYNC_PENDING 时先重读再同步。\
-In a separate Native test root, use native_note_change or knowledgeos update or append-section. Verify the content hash. Reread before syncing when the result is NATIVE_SYNC_PENDING.
-
-只在可选且可用的严格合成模式中提交已验证文件身份及原幂等键；以 COMMITTED 核验提交，OUTCOME_UNKNOWN 先查询原键。\
-Only available synthetic Strict mode uses verified file identity and idempotency keys. Confirm COMMITTED; after OUTCOME_UNKNOWN query the original key.
-
-使用当前模式允许的工具。真实库获准的 Agent 修改须检查租约和基础 SHA-256，保留备份及历史来源，复核后定点同步。Human 变更以完整 Markdown 和 diff 交付。\
-Use tools permitted by the current mode. For approved real-vault Agent edits, check the lease and base SHA-256, preserve backups and provenance, and verify before targeted synchronization. Deliver Human changes as complete Markdown and a diff.
-
-从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
-Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.
+保留可追溯来源、写前备份及租约，写后重读并记日志。用自动反链。读取私有资料的许可与共享许可分别核对。真实库 MCP 和 CLI 保持只读。独立测试根可用现有 Native 命令，Strict Mode 保持可选。
+Preserve traceable sources, leases and backups. Verify writes and append audit events. Use computed backlinks. Check private read and sharing grants independently. Real-vault MCP and CLI are read-only. Native test-root tools and optional Strict Mode stay separate.

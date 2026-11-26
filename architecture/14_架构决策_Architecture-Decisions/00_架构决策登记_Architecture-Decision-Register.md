@@ -31,3 +31,7 @@ There is no built-in multi-device sync. The older Writer requirement is limited 
 
 历史候选和证据可经本地正式原件或 Git 历史追溯。发布版保留 Agent Kit 0.1.1 的来源与 MIT 声明，未把历史测试状态升级为当前验收。\
 Historical candidates and evidence remain traceable in local originals or Git history. The release retains Agent Kit 0.1.1 attribution and MIT terms without promoting historical tests to current acceptance.
+
+## v0.1.5 决策
+
+保留 Markdown Native、双主体及原分类，增加第三个公共知识区。公共新增自主，已有公共知识与 Human 私有变更按具体批准执行。真实库 MCP／CLI 保持只读。此公共区域模型是 KnowledgeOS 自身设计。

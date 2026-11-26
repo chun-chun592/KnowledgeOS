@@ -20,3 +20,5 @@ Native test MCP uses native_note_change and sync_native_wiki. The CLI writes and
 [实际能力矩阵 / Actual Capability Matrix](Modes/00_实际能力矩阵_Capability-Matrix.md)
 
 [目录命名及三语模板对照 / Localized paths and template mapping](../02_知识架构_Knowledge-Architecture/01_三语目录对照_Localized-Paths.md)
+
+MCP 和 CLI 支持 Shared 读取、检索、链接、lint 和提案。真实库写入通过获准的原生文件工具。独立测试根支持 Shared 新建、同名拒绝和追加索引日志。

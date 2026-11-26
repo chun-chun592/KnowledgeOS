@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5
+
+- Add local Shared knowledge, source records and metadata in three layouts.
+- Allow autonomous Agent maintenance and additive Shared creation under the native protocol.
+- Add Shared query, lint and change proposals. Preserve protected real-vault tool writes as disabled.
+- Bind protected native execution to exact approval in the current Human interaction.
+
 ## 0.1.4
 
 - Added complete English, Simplified Chinese, and bilingual vault templates, with matched note types, schema, and collaboration rules.

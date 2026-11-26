@@ -1,21 +1,17 @@
 ---
 name: knowledge-ingest
-description: Compile authorized material through Raw, Source, and Wiki, checking duplication, provenance, and reuse.
+description: Compile authorized material through Raw, Source and Wiki with provenance.
 ---
 
-# 知识摄取 / Knowledge Ingest
+# knowledge-ingest
 
-按来源标识与内容 SHA-256 查重，复用相同原件和已有来源页。保留原件、出处、证据定位和访问约束，再建立或补充 Source 页。\
-Check source identifiers and content SHA-256 for duplicates. Reuse identical originals and existing Source pages. Preserve original bytes, provenance, evidence anchors, and access restrictions, then create or extend the Source page.
+Check source identifiers and SHA-256 before adding. Choose Private or Shared by audience and source sharing permission; reuse existing original bytes.
 
-查找相关概念、实体或主题，决定引用、补充、更新或新建。证据冲突时保留各方及适用范围，必要时组合 knowledge-research、knowledge-synthesis 或 knowledge-update。每份来源产生多少知识页由内容决定。\
-Find related concepts, entities, or topics and decide whether to cite, extend, update, or create. Preserve conflicting evidence and its scope, combining knowledge-research, knowledge-synthesis, or knowledge-update as needed. Let the material determine how many knowledge pages are useful.
+先读目标库 AGENTS.md 和归属规则。按知识任务发现并组合所需 Skills。使用宿主已配置的根路径，遵循 en-US、zh-CN 或 zh-en 的实际相对路径。按需选用 MCP、CLI 或原生文件工具。
+Read the vault entry and ownership rules. Use the configured vault root, actual localized paths, and available tools. No tool is mandatory.
 
-检查来源与受影响 Wiki 页的关联，核对文件和来源哈希，按库内协议维护必要的索引及日志。\
-Verify links between the source and affected wiki notes and check file and source hashes. Maintain affected index entries and the log under the vault protocol.
+Agent 私有知识按所属范围自主维护。公共知识只自主新建及追加该条目的索引、日志。已有公共知识与 Human 私有变更需当前可信交互中的具体批准。核对范围、操作、原始哈希或不存在状态、准确内容及冲突；用原生工具获准执行。无法确认或执行时交付完整手工提案。
+Maintain assigned Agent knowledge autonomously. Shared creation may append its index and log entries. Changes to existing Shared or Human private knowledge require exact approval from the current trusted interaction. Check scope, operation, base hash or absence, exact content and conflicts; use permitted native tools. Fall back to a full manual proposal when confirmation or execution is unavailable.
 
-按宿主选择 MCP、CLI 或原生工具。真实库沿用获准的原生写入和 Human 提案边界。独立测试根可用 knowledgeos ingest 起草，获准时用 --apply 保存原件与来源页；Strict 专用字段仅适用于已启用的严格合成模式。\
-Choose MCP, CLI, or native tools according to the host. Follow approved native writes and the Human proposal boundary in the real vault. In a separate test root, knowledgeos ingest can draft a Source page, and --apply saves it and the original when authorized. Strict-specific fields apply only in enabled synthetic Strict mode.
-
-从目标库的 AGENTS.md 和现行规范确认目录语言，使用该库实际的相对路径。目录语言不限定笔记正文语言。\
-Confirm the layout using the target vault’s AGENTS.md and current rules. Use its actual relative paths. Directory language does not constrain note content.
+保留可追溯来源、写前备份及租约，写后重读并记日志。用自动反链。读取私有资料的许可与共享许可分别核对。真实库 MCP 和 CLI 保持只读。独立测试根可用现有 Native 命令，Strict Mode 保持可选。
+Preserve traceable sources, leases and backups. Verify writes and append audit events. Use computed backlinks. Check private read and sharing grants independently. Real-vault MCP and CLI are read-only. Native test-root tools and optional Strict Mode stay separate.

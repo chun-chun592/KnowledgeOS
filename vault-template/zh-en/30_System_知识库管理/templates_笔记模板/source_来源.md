@@ -78,3 +78,6 @@ In an authorized test root, knowledgeos ingest --apply stores the original under
 ## 中文填写说明
 
 在 Wiki 允许的位置记录来源，原件保存在 `10_Agent_AI知识库/raw_原始资料`。获准的测试根运行 knowledgeos ingest --apply 时，原件写入 `10_Agent_AI知识库/raw_原始资料/documents_文档`，Source 页使用调用者指定的 Wiki 路径。摘要注明证据位置、版本及访问限制。可从 [[10_Agent_AI知识库/wiki_整理后的知识/index_知识目录]] 查相关知识。
+
+用于公共区时填写 owner: shared，并放入公共区相应类型目录。公共来源记录放在公共区来源目录。
+For Shared use, set owner to shared and use the corresponding Shared type directory. Place Shared Source records in its sources directory.

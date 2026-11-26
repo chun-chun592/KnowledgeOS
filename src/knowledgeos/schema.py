@@ -25,7 +25,7 @@ TYPE_DIRS: dict[str, str] = {
 
 AGENT_TYPES = tuple(TYPE_DIRS) + ("source",)
 STATUSES = ("draft", "verified", "needs-review", "outdated", "archived")
-OWNERS = ("agent", "human")
+OWNERS = ("agent", "human", "shared")
 CONFIDENCE = ("high", "medium", "low")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 TAG_RE = re.compile(r"^[a-z0-9][a-z0-9/_-]*$")
@@ -539,7 +539,17 @@ def validate_document(
 
     if check_location:
         parts = document.rel.split("/")
-        if len(parts) >= 3 and parts[1] == layout.wiki.name:
+        if parts[0] == layout.shared.name:
+            if data.get("owner") != "shared":
+                error("owner.shared", "Shared pages must declare 'owner: shared'.")
+            directory = "sources" if note_type == "source" else TYPE_DIRS.get(note_type)
+            if directory and (len(parts) != 3 or parts[1] != layout.path("15_Shared/" + directory).name):
+                error("type.location", f"Type {note_type!r} belongs in {layout.path('15_Shared/' + directory)}/.")
+            if not KEBAB_RE.fullmatch(Path(parts[-1]).stem):
+                error("filename.style", "Use ASCII kebab-case file names for shared pages.")
+        elif data.get("owner") == "shared":
+            error("owner.shared", "Shared ownership requires a shared path.")
+        elif len(parts) >= 3 and parts[1] == layout.wiki.name:
             if data.get("owner") != "agent":
                 error("owner.wiki", "Agent wiki pages must declare 'owner: agent'.")
             expected = TYPE_DIRS.get(note_type)

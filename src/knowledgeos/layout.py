@@ -13,6 +13,7 @@ NAMES = {
     "papers": "学术论文", "websites": "网页文章", "wiki": "整理后的知识",
     "concepts": "概念", "entities": "对象", "topics": "专题", "comparisons": "对比分析",
     "synthesis": "综合研究", "projects": "项目知识", "decisions": "决策记录",
+    "15_Shared": "15_公共知识库", "sources": "来源记录",
     "log.md": "知识更新记录.md", "20_Exchange": "20_协作交流",
     "agent-to-agent": "AI之间的交流", "locks": "编辑锁",
     "agent-to-human": "AI提供给人的知识", "human-to-agent": "人提供给AI的知识",
@@ -28,7 +29,7 @@ NAMES = {
     "project.md": "项目知识.md", "decision.md": "决策记录.md", "source.md": "来源.md",
 }
 LOCALES = ("en-US", "zh-CN", "zh-en")
-REGIONS = ("00_Human", "10_Agent", "20_Exchange", "30_System", "90_Archive")
+REGIONS = ("00_Human", "10_Agent", "15_Shared", "20_Exchange", "30_System", "90_Archive")
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,10 @@ class Layout:
         return self.path("10_Agent/wiki")
 
     @property
+    def shared(self):
+        return self.path("15_Shared")
+
+    @property
     def human(self):
         return self.path("00_Human")
 
@@ -66,7 +71,7 @@ class Layout:
     def meta(self):
         return frozenset(self.path(p).name.casefold() for p in (
             "10_Agent/wiki/index.md", "10_Agent/wiki/log.md", "00_Human/index.md",
-            "30_System/README.md")) | {"index.md", "log.md", "readme.md"}
+            "15_Shared/index.md", "15_Shared/log.md", "30_System/README.md")) | {"index.md", "log.md", "readme.md"}
 
 
 def detect_layout(root: Path) -> Layout:

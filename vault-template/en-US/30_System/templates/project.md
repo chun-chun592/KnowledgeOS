@@ -69,3 +69,5 @@ Use for projects whose knowledge outlives the task. Personal task tracking belon
 ## Sources
 
 -
+
+For Shared use, set owner to shared and use the corresponding Shared type directory. Place Shared Source records in its sources directory.

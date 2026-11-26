@@ -40,12 +40,18 @@ Limit = Annotated[int, Field(ge=1, le=100)]
 Offset = Annotated[int, Field(ge=0)]
 Query = Annotated[str, Field(min_length=1, max_length=300)]
 NotePath = Annotated[str, Field(min_length=1, max_length=512)]
-Subject = Literal["agent", "human", "all"]
+Subject = Literal["agent", "human", "shared", "all"]
 
 
 def subject_of(path: str) -> str:
-    return "human" if any(PurePosixPath(path).parts[0] == Layout(locale).human.name
-                          for locale in LOCALES) else "agent"
+    first = PurePosixPath(path).parts[0]
+    for locale in LOCALES:
+        layout = Layout(locale)
+        if first == layout.human.name:
+            return "human"
+        if first == layout.shared.name:
+            return "shared"
+    return "agent"
 
 
 def safe_name(value: str) -> bool:
@@ -154,6 +160,8 @@ class Wiki:
             raise ValueError("Vault root must be a canonical plain directory")
         self.layout = detect_layout(self.root)
         self.scopes = [self.layout.wiki]
+        if os.path.lexists(self.root / self.layout.shared):
+            self.scopes.append(self.layout.shared)
         for grant in human_read:
             if not safe_name(grant) or not PurePosixPath(grant).is_relative_to(self.layout.human):
                 raise ValueError("Expected a Human-relative directory scope")
@@ -324,7 +332,7 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
     @server.tool(annotations=RO)
     def search_knowledge(query: Query, tag: Query | None = None, offset: Offset = 0, limit: Limit = 20,
                          subject: Subject = "all") -> ResultPage:
-        """Search authorized notes by topic. Select agent, human, or all subjects and paginate."""
+        """Search authorized notes by topic. Select agent, human, shared, or all subjects and paginate."""
         terms = list(dict.fromkeys(PLAIN.findall(query.casefold())))
         if not terms:
             raise ToolError("INVALID_QUERY: use a word or phrase")
@@ -357,11 +365,9 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         return {**note.metadata(), "offset": offset, "next_offset": end if end < len(text) else None,
                 "markdown": text[offset:end]}
 
-    @server.tool(annotations=RO)
-    def propose_human_update(path: NotePath, expected_sha256: str, markdown: str) -> dict:
-        """Compare complete proposed Markdown with a readable Human note for manual application."""
-        if wiki.layout.human not in PurePosixPath(path).parents:
-            raise ToolError("PATH_DENIED: expected a Human Markdown path")
+    def propose_update(path: str, expected_sha256: str, markdown: str, region: PurePosixPath) -> dict:
+        if region not in PurePosixPath(path).parents or PurePosixPath(path).name.casefold() in wiki.layout.meta:
+            raise ToolError("PATH_DENIED: expected a protected knowledge note")
         note = wiki.read(path)
         if expected_sha256 != note.sha256:
             raise ToolError("CONFLICT: note hash has changed")
@@ -373,8 +379,20 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
                                  fromfile=f"a/{path}", tofile=f"b/{path}"):
             diff.append(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n")
         return {"code": "MANUAL_APPLY_REQUIRED", "path": path, "base_sha256": note.sha256,
+                "request_id": hashlib.sha256((path + "\0" + expected_sha256 + "\0" + markdown).encode()).hexdigest(),
+                "operation": "update", "subject": subject_of(path),
                 "proposed_sha256": hashlib.sha256(markdown.encode("utf-8")).hexdigest(),
                 "file_identity": note.file_identity, "markdown": markdown, "diff": "".join(diff)}
+
+    @server.tool(annotations=RO)
+    def propose_human_update(path: NotePath, expected_sha256: str, markdown: str) -> dict:
+        """Draft an exact replacement for a readable Human note."""
+        return propose_update(path, expected_sha256, markdown, wiki.layout.human)
+
+    @server.tool(annotations=RO)
+    def propose_shared_update(path: NotePath, expected_sha256: str, markdown: str) -> dict:
+        """Draft a Shared change for Human review; this tool never accepts approvals."""
+        return propose_update(path, expected_sha256, markdown, wiki.layout.shared)
 
     @server.tool(annotations=RO)
     def note_metadata(path: NotePath) -> NoteMetadata:
@@ -429,7 +447,7 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
             if doc.path.name.casefold() not in wiki.layout.meta:
                 if doc.error or not isinstance(doc.frontmatter.get("title"), str) or not doc.frontmatter.get("title", "").strip():
                     issues.append({"path": note.path, "kind": "properties", "detail": "Invalid frontmatter or missing title"})
-                if "type" in doc.frontmatter and wiki.layout.wiki in PurePosixPath(note.path).parents:
+                if "type" in doc.frontmatter and any(region in PurePosixPath(note.path).parents for region in (wiki.layout.wiki, wiki.layout.shared)):
                     issues.extend({"path": note.path, "kind": issue.code, "detail": issue.message}
                                   for issue in validate_document(doc, schema=schema, layout=wiki.layout))
                 body = " ".join(doc.body.split()).casefold()
@@ -448,7 +466,7 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         code = ("NATIVE_TEST_WRITE_AVAILABLE" if native_write else "STRICT_WRITER_AVAILABLE" if strict
                 else "STRICT_WRITER_UNAVAILABLE" if write_endpoint is not None else "READ_ONLY")
         return {"available": native_write or strict, "code": code, "native_test_write": native_write,
-                "strict_writer": strict, "native_file_policy": "requires_operator_approval_and_vault_rules",
+                "strict_writer": strict, "native_file_policy": "region_rules_and_specific_human_approval_for_protected_changes",
                 "publisher_enabled": False}
 
     def forward_change(request: dict) -> dict:
@@ -544,10 +562,16 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
         if wiki.layout.human in target.parents:
             return {"code": "HUMAN_WRITE_AUTHORIZATION_REQUIRED", "operation": operation,
                     "subject": "human", "may_submit": False}
-        if wiki.layout.wiki not in target.parents or target.name.casefold() in wiki.layout.meta:
+        shared = wiki.layout.shared in target.parents
+        if target.name.casefold() in wiki.layout.meta or (not shared and wiki.layout.wiki not in target.parents):
             raise ToolError("PATH_DENIED: expected a knowledge note in the Agent Wiki")
         if (operation == "update") != (expected_sha256 is not None):
             raise ToolError("INVALID_PLAN: update requires a SHA-256; create expects absence")
+        if shared and operation == "update":
+            if wiki.read(path).sha256 != expected_sha256:
+                raise ToolError("CONFLICT: note hash has changed")
+            return {"code": "SHARED_WRITE_AUTHORIZATION_REQUIRED", "operation": operation,
+                    "subject": "shared", "may_submit": False}
         if operation == "update":
             if wiki.read(path).sha256 != expected_sha256:
                 raise ToolError("CONFLICT: note hash has changed")
@@ -566,8 +590,8 @@ def make_server(wiki: Wiki, write_endpoint: tuple[str, str] | None = None, *, na
                     raise ToolError("CONFLICT: destination already exists")
             except OSError:
                 raise ToolError("PATH_DENIED: target parent unavailable") from None
-        return {"code": "SECURE_WRITER_UNAVAILABLE", "operation": operation,
-                "subject": "agent", "may_submit": False}
+        return {"code": "NATIVE_CREATE_ALLOWED" if shared else "SECURE_WRITER_UNAVAILABLE", "operation": operation,
+                "subject": "shared" if shared else "agent", "may_submit": False}
 
     return server
 
