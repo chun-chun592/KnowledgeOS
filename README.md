@@ -4,6 +4,10 @@
 
 KnowledgeOS helps you and your agents turn existing notes and source material into reusable knowledge. It works with a shared Markdown folder. Open the notes in any editor or file manager. Obsidian is optional and can stay closed.
 
+## Architecture
+
+The [formal architecture](architecture/README.md) documents the existing Markdown layout, Human and Agent roles, Skills and tool selection, knowledge workflows, and the separate Strict mode contracts.
+
 ## What you can do
 
 - Find relevant notes, follow their links, and check for overlap before creating a new page.
@@ -57,7 +61,7 @@ For a **separate approved test root**, set `KNOWLEDGEOS_PROTECTED_VAULT` to your
 
 ### Advanced option: Strict mode
 
-Strict mode uses separate Windows principals, Broker, Secure Writer and SQLite. It requires `pywin32`, a trusted synthetic deployment, a protected-root setting and preconfigured identities and ACLs. Configure the server with `--synthetic-write-config` for that environment. Publisher stays disabled. [Architecture](docs/Architecture.md)
+Strict mode uses separate Windows principals, Broker, Secure Writer and SQLite. It requires `pywin32`, a trusted synthetic deployment, a protected-root setting and preconfigured identities and ACLs. Configure the server with `--synthetic-write-config` for that environment. Publisher stays disabled. [Formal architecture](architecture/README.md)
 
 ## Project and attribution
 

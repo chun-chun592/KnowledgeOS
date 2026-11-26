@@ -4,6 +4,10 @@
 
 KnowledgeOS 帮助你和 Agent 把已有笔记与来源材料整理成可复用的知识。它使用同一个 Markdown 文件夹。你可以用任意编辑器或文件管理器打开笔记，Obsidian 可按需使用。
 
+## 系统架构
+
+[正式架构](architecture/README.md)记录现有 Markdown 目录、Human 与 Agent 的主体边界、Skills 与工具选择、知识工作流，以及独立的严格模式契约。
+
 ## 可以做什么
 
 - 检索相关笔记，跟踪引用，并在新建前检查内容重叠。
@@ -57,7 +61,7 @@ knowledgeos-mcp --vault <vault-root>
 
 ### 高级选项：严格模式
 
-严格模式使用独立 Windows 主体、Broker、Secure Writer 和 SQLite，需要 `pywin32`、可信合成部署、受保护根配置以及预先配置的身份和 ACL。在该环境中以 `--synthetic-write-config` 启动服务。Publisher 保持禁用。 [架构说明](docs/Architecture.md)
+严格模式使用独立 Windows 主体、Broker、Secure Writer 和 SQLite，需要 `pywin32`、可信合成部署、受保护根配置以及预先配置的身份和 ACL。在该环境中以 `--synthetic-write-config` 启动服务。Publisher 保持禁用。 [正式架构](architecture/README.md)
 
 ## 项目与来源
 

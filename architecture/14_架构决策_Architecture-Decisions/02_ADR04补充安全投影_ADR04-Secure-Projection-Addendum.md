@@ -1,3 +1,6 @@
+> 历史设计证据，原有状态和约束按当时范围解读。当前适用性见[架构入口](../README.md)。\
+> Historical design evidence. Interpret the original status and constraints in their original scope. See the [architecture entry point](../README.md) for current applicability.
+
 # ADR-04 补充：受控投影 / ADR-04 Addendum for Controlled Projection
 
 R5 已批准在独立合成环境中由获准的 Secure Writer 执行普通 Markdown 提交，Publisher 继续禁用。\
@@ -45,3 +48,5 @@ Windows 的 FILE_ID 核验和替换并非原子比较交换；存在等效直写
 Windows FILE_ID verification and replacement do not form atomic compare-and-swap. Execution stays disabled where an equivalent direct writer exists and validation is incomplete.
 
 
+原文后续 H2 身份迁移试验保留在本地；本节只保留合成严格模式条款。\
+The subsequent H2 identity experiment remains local. This copy retains the synthetic Strict mode terms.
