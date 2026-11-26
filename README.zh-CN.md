@@ -4,6 +4,8 @@
 
 KnowledgeOS 帮助你和 Agent 把已有笔记与来源材料整理成可复用的知识。它使用同一个 Markdown 文件夹。你可以用任意编辑器或文件管理器打开笔记，Obsidian 可按需使用。
 
+当前发行版本为 **v0.1.4**，请从该版本的检出目录安装。现有英文库继续用原路径；新库可复制一套完整的[语言模板](vault-template/README.zh-CN.md)。
+
 ## 系统架构
 
 [正式架构](architecture/README.md)记录现有 Markdown 目录、Human 与 Agent 的主体边界、Skills 与工具选择、知识工作流，以及独立的严格模式契约。
@@ -65,4 +67,4 @@ knowledgeos-mcp --vault <vault-root>
 
 ## 项目与来源
 
-KnowledgeOS 0.1.3 整合了 Agent Kit 0.1.1 的 Core 源码，保留上游 MIT 声明。[许可证](LICENSE) · [变更记录](CHANGELOG.md)
+KnowledgeOS 0.1.4 整合了 Agent Kit 0.1.1 的 Core 源码，保留上游 MIT 声明。[许可证](LICENSE) · [变更记录](CHANGELOG.md)

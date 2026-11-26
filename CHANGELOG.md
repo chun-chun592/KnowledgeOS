@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.4
+
+- Added complete English, Simplified Chinese, and bilingual vault templates, with matched note types, schema, and collaboration rules.
+- Shared locale detection and path mapping across CLI, MCP and Markdown Native. Existing English vault paths remain supported, and mixed layouts fail closed.
+- Updated eight shared Skills, architecture navigation, and the three template workflows.
+- Preserved protected-vault write restrictions and the existing English synthetic Strict-mode contract.
+
 ## 0.1.3
 
 - Restored Python packaging, CLI diagnostics, test-root initialization, source intake, synthesis scaffolds, section append and soft archive.

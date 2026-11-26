@@ -4,6 +4,8 @@
 
 KnowledgeOS helps you and your agents turn existing notes and source material into reusable knowledge. It works with a shared Markdown folder. Open the notes in any editor or file manager. Obsidian is optional and can stay closed.
 
+The current release is **v0.1.4**. Install from the v0.1.4 checkout. Existing English vaults keep their paths. For new vaults, copy one complete [language template](vault-template/README.md).
+
 ## Architecture
 
 The [formal architecture](architecture/README.md) documents the existing Markdown layout, Human and Agent roles, Skills and tool selection, knowledge workflows, and the separate Strict mode contracts.
@@ -65,4 +67,4 @@ Strict mode uses separate Windows principals, Broker, Secure Writer and SQLite. 
 
 ## Project and attribution
 
-KnowledgeOS 0.1.3 integrates Core source from Agent Kit 0.1.1. The upstream MIT notice is retained. [License](LICENSE) · [Changes](CHANGELOG.md)
+KnowledgeOS 0.1.4 integrates Core source from Agent Kit 0.1.1. The upstream MIT notice is retained. [License](LICENSE) · [Changes](CHANGELOG.md)
